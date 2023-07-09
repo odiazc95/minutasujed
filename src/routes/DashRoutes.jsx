@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import LatBar from "../components/lat_com";
 
 const InicioPage = lazy(() => import('../pages/inicio'));
 const MinutasPage = lazy(() => import('../pages/minutas'));
@@ -19,25 +20,27 @@ const DashRoutes = () => {
 
     return (
         <>
-            <Suspense fallback={ <div>Loading...</div> } >
-                <Routes>
-                    <Route path="/inicio" element={ <InicioPage /> } />
-                    <Route path="/minutas" element={ <MinutasPage /> } />
-                    <Route path="/minutas/generarminuta" element={ <GenerarMinutaPage /> } />
-                    <Route path="/minutas/:id" element={ <MinutaSeleccionadaPage /> } />
-                    <Route path="/minutas/:idA/generaracuerdo" element={ <GenerarAcuerdoPage /> } />
-                    <Route path="/minutas/:idA/seguimiento" element={ <SeguimientoPage /> } />
-                    <Route path="/perfil" element={ <PerfilPage /> } />
-                    <Route path="/usuarios" element={ <UsuariosPage /> } />
-                    <Route path="/minutas/editar/:idM" element={ <EditarMinutaPage /> } />
-                    <Route path="/acuerdos/editar/:idA" element={ <EditarAcuerdoPage /> } />
-                    <Route path="/pdf/:idM" element={ <PDFViewerPage /> } />
-                    <Route path="/" element={ <Navigate to="/Dash/inicio" /> } />
+            <LatBar> 
+                <Suspense fallback={ <div>Loading...</div> } >
+                    <Routes>
+                        <Route path="/inicio" element={ <InicioPage /> } />
+                        <Route path="/minutas" element={ <MinutasPage /> } />
+                        <Route path="/minutas/generarminuta" element={ <GenerarMinutaPage /> } />
+                        <Route path="/minutas/:id" element={ <MinutaSeleccionadaPage /> } />
+                        <Route path="/minutas/:idA/generaracuerdo" element={ <GenerarAcuerdoPage /> } />
+                        <Route path="/minutas/:idA/seguimiento" element={ <SeguimientoPage /> } />
+                        <Route path="/perfil" element={ <PerfilPage /> } />
+                        <Route path="/usuarios" element={ <UsuariosPage /> } />
+                        <Route path="/minutas/editar/:idM" element={ <EditarMinutaPage /> } />
+                        <Route path="/acuerdos/editar/:idA" element={ <EditarAcuerdoPage /> } />
+                        <Route path="/pdf/:idM" element={ <PDFViewerPage /> } />
+                        <Route path="/" element={ <Navigate to="/Dash/inicio" /> } />
 
-                    {/* If any route match, show the not found page */}
-                    <Route path="*" element={ <NotFoundPage /> } />
-                </Routes>
-            </Suspense>
+                        {/* If any route match, show the not found page */}
+                        <Route path="*" element={ <NotFoundPage /> } />
+                    </Routes>
+                </Suspense>
+            </LatBar>
         </>
     )
 
