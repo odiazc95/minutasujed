@@ -78,7 +78,7 @@ function LatBar({ children }) {
     //   </div>
     // </nav>
     <>
-      <body className='w-full h-screen relative'>
+      <main className='w-full h-screen relative'>
         <nav className='w-full h-14 bg-main flex justify-center items-center'>
 
           <div className='hidden md:flex w-40 justify-center items-center'>
@@ -135,7 +135,7 @@ function LatBar({ children }) {
           </aside>
 
         </section>
-      </body>
+      </main>
     </>
   );
 }
