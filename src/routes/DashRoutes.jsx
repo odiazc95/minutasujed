@@ -26,7 +26,7 @@ const DashRoutes = () => {
                     <Routes>
                         <Route path="/inicio" element={ <InicioPage /> } />
                         <Route path="/minutas" element={ <MinutasPage /> } />
-                        <Route path="/minutas/generarminuta" element={ <GenerarMinutaPage /> } />
+                        <Route path="/minuta/generar" element={ <GenerarMinutaPage /> } />
                         <Route path="/minutas/:id" element={ <MinutaSeleccionadaPage /> } />
                         <Route path="/minutas/:idA/generaracuerdo" element={ <GenerarAcuerdoPage /> } />
                         <Route path="/minutas/:idA/seguimiento" element={ <SeguimientoPage /> } />

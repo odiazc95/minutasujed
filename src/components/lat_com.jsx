@@ -130,7 +130,7 @@ function LatBar({ children }) {
 
           </aside>
           
-          <aside className='w-full h-full overflow-y-auto p-4 rounded-tl-xl bg-white'>
+          <aside className='w-full h-full overflow-y-auto p-4 rounded-t-xl md:rounded-tl-xl bg-white'>
             { children }
           </aside>
 

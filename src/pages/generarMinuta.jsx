@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import EditText from "../components/rich_text";
 import "../assets/styles/generarMinuta.css";
 import Swal from "sweetalert2";
+import { Title, Icon, Button, TextInput } from "@tremor/react";
+import { ArrowUturnLeftIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 
 const NuevaMinutas = () => {
   const [usersData, setUserData] = useState([]);
@@ -18,6 +21,8 @@ const NuevaMinutas = () => {
     descripcion: "",
     estatus: "Activo"
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +46,7 @@ const NuevaMinutas = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(datosMinuta)
 
     const responsableEncontrado = usersData.find(
       (user) => user.nombre === datosMinuta.responsable
@@ -59,7 +65,8 @@ const NuevaMinutas = () => {
             icon: "success",
             confirmButtonText: "Cool"
           }).then(() => {
-            window.location.href='/minutas';
+            // window.location.href='/minutas';
+            navigate("/Dash/minutas")
           });
         })
         .catch((error) => {
@@ -82,98 +89,198 @@ const NuevaMinutas = () => {
   };
 
   return (
-    <div className="cuestionario_minuta">
-      <div className="generarminuta">
-        <div className="arriba">
-          <div>Atras</div>
+    // <div className="cuestionario_minuta">
+    //   <div className="generarminuta">
+    //     <div className="arriba">
+    //       <div>Atras</div>
+    //     </div>
+    //     <div className="parte_abajo_minuta">
+    //       <form onSubmit={handleSubmit}>
+    //         <input
+    //           className="input_minuta"
+    //           type="text"
+    //           name="asunto"
+    //           placeholder="Asunto"
+    //           value={datosMinuta.asunto}
+    //           onChange={handleChange}
+    //         />
+    //         <input
+    //           className="input_minuta"
+    //           type="text"
+    //           name="responsable"
+    //           placeholder="Responsable"
+    //           value={datosMinuta.responsable}
+    //           onChange={handleChange}
+    //         />
+    //         <div className="hora_fecha">
+    //           <input
+    //             className="fecha input_minuta"
+    //             type="text"
+    //             name="fecha"
+    //             placeholder="Fecha"
+    //             value={datosMinuta.fecha}
+    //             onChange={handleChange}
+    //           />
+    //           <input
+    //             className="hora input_minuta"
+    //             type="text"
+    //             name="hora"
+    //             placeholder="Hora"
+    //             value={datosMinuta.hora}
+    //             onChange={handleChange}
+    //           />
+    //         </div>
+    //         <h4 className="inf-gen">Informacion general</h4>
+    //         <input
+    //           className="input_minuta"
+    //           type="text"
+    //           name="tema"
+    //           placeholder="Tema"
+    //           value={datosMinuta.tema}
+    //           onChange={handleChange}
+    //         />
+    //         <input
+    //           className="input_minuta"
+    //           type="text"
+    //           name="area"
+    //           placeholder="Area"
+    //           value={datosMinuta.area}
+    //           onChange={handleChange}
+    //         />
+    //         <input
+    //           className="input_minuta"
+    //           type="text"
+    //           name="lugar"
+    //           placeholder="Lugar"
+    //           value={datosMinuta.lugar}
+    //           onChange={handleChange}
+    //         />
+    //         {/* <EditText className="edit-text" /> */}
+    //         <input
+    //           className="input_minuta"
+    //           type="text"
+    //           name="descripcion"
+    //           placeholder="Descripcion"
+    //           value={datosMinuta.descripcion}
+    //           onChange={handleChange}
+    //         />
+    //         <input
+    //           className="input_minuta"
+    //           type="text"
+    //           name="invitados"
+    //           placeholder="Invitados"
+    //           value={datosMinuta.usuario_id}
+    //           onChange={handleChange}
+    //         />
+    //         <div className="cont-guardar">
+    //           <button className="guardar" type="submit">
+    //             Guardar
+    //           </button>
+    //         </div>
+    //       </form>
+    //     </div>
+    //   </div>
+    // </div>
+    <>
+      <Icon className='w-10 h-10 cursor-pointer' 
+        icon={ ArrowUturnLeftIcon } 
+        onClick={ () => navigate(-1) } 
+        variant='solid' 
+        color='red'
+        tooltip='Regresar'
+      />
+
+      <form className='w-full px-5 lg:px-40' onSubmit={handleSubmit}>
+        <TextInput
+          className='w-full mt-4'
+          label='Asunto'
+          name='asunto'
+          placeholder='Asunto'
+          value={datosMinuta.asunto}
+          onChange={handleChange}
+        />
+        <TextInput
+          className='w-full mt-1'
+          label='Responsable'
+          name='responsable'
+          placeholder='Responsable'
+          value={datosMinuta.responsable}
+          onChange={handleChange}
+        />
+        <div className='flex flex-col lg:flex-row gap-1'>
+          <TextInput
+            className='w-full lg:w-1/2 mt-1'
+            label='Fecha'
+            name='fecha'
+            placeholder='Fecha'
+            value={datosMinuta.fecha}
+            onChange={handleChange}
+          />
+          <TextInput
+            className='w-full lg:w-1/2 mt-1'
+            label='Hora'
+            type='date'
+            name='hora'
+            placeholder='Hora'
+            value={datosMinuta.hora}
+            onChange={handleChange}
+          />
         </div>
-        <div className="parte_abajo_minuta">
-          <form onSubmit={handleSubmit}>
-            <input
-              className="input_minuta"
-              type="text"
-              name="asunto"
-              placeholder="Asunto"
-              value={datosMinuta.asunto}
-              onChange={handleChange}
-            />
-            <input
-              className="input_minuta"
-              type="text"
-              name="responsable"
-              placeholder="Responsable"
-              value={datosMinuta.responsable}
-              onChange={handleChange}
-            />
-            <div className="hora_fecha">
-              <input
-                className="fecha input_minuta"
-                type="text"
-                name="fecha"
-                placeholder="Fecha"
-                value={datosMinuta.fecha}
-                onChange={handleChange}
-              />
-              <input
-                className="hora input_minuta"
-                type="text"
-                name="hora"
-                placeholder="Hora"
-                value={datosMinuta.hora}
-                onChange={handleChange}
-              />
-            </div>
-            <h4 className="inf-gen">Informacion general</h4>
-            <input
-              className="input_minuta"
-              type="text"
-              name="tema"
-              placeholder="Tema"
-              value={datosMinuta.tema}
-              onChange={handleChange}
-            />
-            <input
-              className="input_minuta"
-              type="text"
-              name="area"
-              placeholder="Area"
-              value={datosMinuta.area}
-              onChange={handleChange}
-            />
-            <input
-              className="input_minuta"
-              type="text"
-              name="lugar"
-              placeholder="Lugar"
-              value={datosMinuta.lugar}
-              onChange={handleChange}
-            />
-            {/* <EditText className="edit-text" /> */}
-            <input
-              className="input_minuta"
-              type="text"
-              name="descripcion"
-              placeholder="Descripcion"
-              value={datosMinuta.descripcion}
-              onChange={handleChange}
-            />
-            <input
-              className="input_minuta"
-              type="text"
-              name="invitados"
-              placeholder="Invitados"
-              value={datosMinuta.usuario_id}
-              onChange={handleChange}
-            />
-            <div className="cont-guardar">
-              <button className="guardar" type="submit">
-                Guardar
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+        
+        <Title className='mt-4'>Informacion general</Title>
+        <TextInput
+          className='w-full mt-1'
+          label='Tema'
+          name='tema'
+          placeholder='Tema'
+          value={datosMinuta.tema}
+          onChange={handleChange}
+        />
+        <TextInput
+          className='w-full mt-1'
+          label='Area'
+          name='area'
+          placeholder='Area'
+          value={datosMinuta.area}
+          onChange={handleChange}
+        />
+        <TextInput
+          className='w-full mt-1'
+          label='Lugar'
+          name='lugar'
+          placeholder='Lugar'
+          value={datosMinuta.lugar}
+          onChange={handleChange}
+        />
+        <textarea
+          className='w-full mt-1 border-[1px] border-tremor-border rounded-tremor-default px-4 py-1 bg-white hover:bg-tremor-background-muted focus:ring-2 focus:ring-tremor-brand-muted focus:border-tremor-brand-subtle focus:outline-none
+          shadow-tremor-input placeholder:text-tremor-content text-tremor-content-emphasis'
+          label='Descripcion'
+          name='descripcion'
+          rows='7'
+          placeholder='Descripcion'
+          value={datosMinuta.descripcion}
+          onChange={handleChange}
+        />
+        <TextInput
+          className='w-full mt-1'
+          label='Invitados'
+          name='usuario_id'
+          placeholder='Invitados'
+          value={datosMinuta.usuario_id}
+          onChange={handleChange}
+        />
+        <Button
+          className='w-full mt-4'
+          type='submit'
+          color='green'
+          icon={ PaperAirplaneIcon }
+          iconPosition='right'
+        >
+          Guardar
+        </Button>
+      </form>
+    </>
   );
 };
 

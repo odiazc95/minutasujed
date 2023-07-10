@@ -110,7 +110,7 @@ const Minutas = () => {
         <Button
           icon={ PlusCircleIcon }
           iconPosition="right"
-          onClick={ () => navigate('/Dash/minutas/generaminuta') }
+          onClick={ () => navigate('/Dash/minuta/generar') }
           tooltip="Crear minuta"
           variant='secondary'
           color='red'
