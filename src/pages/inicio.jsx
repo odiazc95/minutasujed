@@ -46,7 +46,7 @@ const Inicio = () =>{
                 Este es el sistema de gestión de minutas. Hecho para registrar, invitar y dar seguimiento a las reuniones.
             </Text>
 
-            <Title className='mt-4'>
+            <Title className='mt-6'>
                 Para generar una minuta debes seguir los siguientes pasos:
             </Title>
             <List className="max-w-lg">
