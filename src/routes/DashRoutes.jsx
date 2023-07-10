@@ -1,6 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LatBar from "../components/lat_com";
+import Loading from '../components/Loading';
 
 const InicioPage = lazy(() => import('../pages/inicio'));
 const MinutasPage = lazy(() => import('../pages/minutas'));
@@ -21,7 +22,7 @@ const DashRoutes = () => {
     return (
         <>
             <LatBar> 
-                <Suspense fallback={ <div>Loading...</div> } >
+                <Suspense fallback={ <Loading /> } >
                     <Routes>
                         <Route path="/inicio" element={ <InicioPage /> } />
                         <Route path="/minutas" element={ <MinutasPage /> } />

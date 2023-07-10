@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import Loading from '../components/Loading';
 
 
 const LoginPage = lazy(() => import('../pages/login'));
@@ -9,7 +10,7 @@ const LoginRoutes = () => {
 
     return (
         <>
-            <Suspense fallback={ <div>Loading...</div> } >
+            <Suspense fallback={ <Loading /> } >
                 <Routes>
                     <Route path="/Login" element={ <LoginPage /> } />
                     <Route path="/" element={ <Navigate to="/Login" /> } />
