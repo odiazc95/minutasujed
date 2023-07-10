@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom";
-import "../assets/styles/minutas.css";
+import { Link, useNavigate } from "react-router-dom";
+// import "../assets/styles/minutas.css";
 import { Activa } from "../components/Minutas";
 import { Finalizada } from "../components/Minutas";
-import { AiOutlineSearch, AiTwotoneFilter } from "react-icons/ai";
+// import { AiOutlineSearch, AiTwotoneFilter } from "react-icons/ai";
 import Cookies from 'js-cookie';
+import { Metric, Title, Icon, Divider, TextInput, Button } from "@tremor/react";
+import { MagnifyingGlassCircleIcon, PlusCircleIcon, FunnelIcon } from '@heroicons/react/24/outline'
 
 const Minutas = () => {
 
-  
+  const navigate = useNavigate();
 
   const idUserCoockie = Cookies.get('idUser');
   const UserNameCoockie = Cookies.get('UserName');
@@ -47,33 +49,90 @@ const Minutas = () => {
   }
 
   return (
-    <div className="contenedor">
-      <div className="contenedor_minutas">
-        <div className="arriba">
-          <div className="cont-busqueda">
-            <div className="busqueda">
-              <AiOutlineSearch className="iconos_minuta" />
-              <input className="search" type="text" placeholder="Buscar" />
-              <div className="botonIr">
-                <p>Ir</p>
-              </div>
-            </div>
-            <div className="filtro">
-              <AiTwotoneFilter className="iconos_minuta" />
-            </div>
-          </div>
-          <Link to="/minutas/generaminuta" className="btncrearminuta">
-            Crear minuta +
-          </Link>
-        </div>
-        <div className="abajo">
-          <h4 className="estado">Activas</h4>
-          {minutaA}
-          <h4 className="estado">Finalizadas</h4>
-          {minutaF}
-        </div>
+    // <div className="contenedor">
+    //   <div className="contenedor_minutas">
+    //     <div className="arriba">
+    //       <div className="cont-busqueda">
+    //         <div className="busqueda">
+    //           <AiOutlineSearch className="iconos_minuta" />
+    //           <input className="search" type="text" placeholder="Buscar" />
+    //           <div className="botonIr">
+    //             <p>Ir</p>
+    //           </div>
+    //         </div>
+    //         <div className="filtro">
+    //           <AiTwotoneFilter className="iconos_minuta" />
+    //         </div>
+    //       </div>
+    //       <Link to="/Dash/minutas/generaminuta" className="btncrearminuta">
+    //         Crear minuta +
+    //       </Link>
+    //     </div>
+    //     <div className="abajo">
+    //       <h4 className="estado">Activas</h4>
+    //       {minutaA}
+    //       <h4 className="estado">Finalizadas</h4>
+    //       {minutaF}
+    //     </div>
+    //   </div>
+    // </div>
+    <>
+      <Metric>Minutas</Metric>
+      <Divider />
+
+      <div className='w-full flex gap-5'>
+
+        <form className='w-full flex gap-2'>
+
+          <TextInput 
+            placeholder="Buscar"
+            icon={ MagnifyingGlassCircleIcon }
+          />
+
+          <Button
+            tooltip="Buscar minuta"
+            color='red'
+          >
+            Ir
+          </Button>
+
+
+          <Icon
+            icon={ FunnelIcon }
+            tooltip="Filtrar"
+            variant="solid"
+            color='red'
+          />
+        
+        </form>
+
+
+        <Button
+          icon={ PlusCircleIcon }
+          iconPosition="right"
+          onClick={ () => navigate('/Dash/minutas/generaminuta') }
+          tooltip="Crear minuta"
+          variant='secondary'
+          color='red'
+        >
+          Crear minuta
+        </Button>
+
       </div>
-    </div>
+
+      {/* <div className="abajo">
+    //       <h4 className="estado">Activas</h4>
+    //       {minutaA}
+    //       <h4 className="estado">Finalizadas</h4>
+    //       {minutaF}
+    //     </div> */}
+
+    <Title className='mt-4'>Activas</Title>
+    {minutaA}
+    <Title className='mt-4'>Finalizadas</Title>
+    {minutaF}
+
+    </>
   );
 };
 
