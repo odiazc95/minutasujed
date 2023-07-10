@@ -73,7 +73,7 @@ const MinutaSeleccionada = () => {
             variant='secondary'
             color='red'
           >
-            Conclusion de la reunión
+            Conclusión de la reunión
           </Button>
 
           <Button

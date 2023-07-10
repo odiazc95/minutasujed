@@ -120,9 +120,9 @@ const Minutas = () => {
 
       </div>
 
-    <Title className='mt-4'>Activas</Title>
+    <Metric className='mt-4 mb-2'>Activas</Metric>
     {minutaA}
-    <Title className='mt-4'>Finalizadas</Title>
+    <Metric className='mt-4 mb-2'>Finalizadas</Metric>
     {minutaF}
 
     </>
