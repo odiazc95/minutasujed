@@ -106,9 +106,9 @@ function LatBar({ children }) {
           </ul>
         </div>
 
-        <section className="h-[calc(100vh-56px)] flex">
+        <section className="h-[calc(100vh-56px)] flex bg-main">
 
-          <aside className='hidden md:flex w-40 p-2 bg-main flex-col justify-between'>
+          <aside className='hidden md:flex w-40 p-2 flex-col justify-between'>
 
             <ul className='flex flex-col justify-center items-center gap-2 mt-10'>
               { ROUTES.map(({ label, path, icon }) => (
@@ -130,7 +130,7 @@ function LatBar({ children }) {
 
           </aside>
           
-          <aside className='w-full h-full overflow-y-auto p-4'>
+          <aside className='w-full h-full overflow-y-auto p-4 rounded-tl-xl bg-white'>
             { children }
           </aside>
 

@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import EditText from "../components/rich_text";
 import "../assets/styles/generarAcuerdo.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Title, Icon, Button, Select, SelectItem, TextInput } from "@tremor/react";
+import { ArrowUturnLeftIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 
 const NuevoAcuerdo = () => {
   const { idA } = useParams();
@@ -19,6 +21,8 @@ const NuevoAcuerdo = () => {
     reporte_estado:"En revision"
   });
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchResponsables = async () => {
       try {
@@ -32,7 +36,8 @@ const NuevoAcuerdo = () => {
     fetchResponsables();
   }, []);
 
-  const handleGuardarClick = async () => {
+  const handleGuardarClick = async (e) => {
+    e.preventDefault();
     try {
       const response = await axios.post(
         "http://localhost:3001/agreement/",
@@ -45,7 +50,7 @@ const NuevoAcuerdo = () => {
         icon: "success",
         confirmButtonText: "Cool",
       }).then(() => {
-        window.location.href = `/minutas/${idA}`;
+        navigate(`/minutas/${idA}`);
       });
     } catch (error) {
       console.error("Error al guardar los datos:", error);
@@ -59,89 +64,171 @@ const NuevoAcuerdo = () => {
   };
 
   return (
-    <div className="contenedor">
-      <div className="generaracuerdo">
-        <div className="arriba">
-          <div>Atras</div>
-        </div>
-        <div className="parte_abajo_acuerdo">
-          <h4 className="inf-gen">Datos del acuerdo</h4>
-          <select
-            className="input_acuerdo"
+    // <div className="contenedor">
+    //   <div className="generaracuerdo">
+    //     <div className="arriba">
+    //       <div>Atras</div>
+    //     </div>
+    //     <div className="parte_abajo_acuerdo">
+    //       <h4 className="inf-gen">Datos del acuerdo</h4>
+    //       <select
+    //         className="input_acuerdo"
+    //         value={formData.responsablec_id}
+    //         onChange={(e) =>
+    //           setFormData({
+    //             ...formData,
+    //             responsablec_id: e.target.value,
+    //           })
+    //         }
+    //       >
+    //         <option value="">Responsable a cumplir</option>
+    //         {responsables.map((responsable) => (
+    //           <option key={responsable._id} value={responsable._id}>
+    //             {responsable.nombre}
+    //           </option>
+    //         ))}
+    //       </select>
+
+    //       <select
+    //         className="input_acuerdo"
+    //         value={formData.responsabler_id}
+    //         onChange={(e) =>
+    //           setFormData({
+    //             ...formData,
+    //             responsabler_id: e.target.value,
+    //           })
+    //         }
+    //       >
+    //         <option value="">Responsable a revisión</option>
+    //         {responsables.map((responsable) => (
+    //           <option key={responsable._id} value={responsable._id}>
+    //             {responsable.nombre}
+    //           </option>
+    //         ))}
+    //       </select>
+
+    //       <h4 className="inf-gen">Información general</h4>
+    //       <div className="titulo_fecha">
+    //         <input
+    //           className="titulo input_acuerdo"
+    //           type="text"
+    //           placeholder="Título"
+    //           value={formData.acuerdo}
+    //           onChange={(e) =>
+    //             setFormData({ ...formData, acuerdo: e.target.value })
+    //           }
+    //         />
+    //         <input
+    //           className="fecha input_acuerdo"
+    //           type="text"
+    //           placeholder="Fecha de compromiso (DD-MM-YY)"
+    //           value={formData.fecha}
+    //           onChange={(e) =>
+    //             setFormData({ ...formData, fecha: e.target.value })
+    //           }
+    //         />
+    //       </div>
+    //       <div className="">
+    //         <input
+    //           type="text"
+    //           placeholder="Descripción"
+    //           className="edit-text"
+    //           value={formData.descripcion}
+    //           onChange={(e) =>
+    //             setFormData({ ...formData, descripcion: e.target.value })
+    //           }
+    //         />
+    //       </div>
+    //       <div className="cont-guardar">
+    //         <button className="guardar" onClick={handleGuardarClick}>
+    //           Guardar
+    //         </button>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+
+    <>
+        <Icon className='w-10 h-10 cursor-pointer' 
+          icon={ ArrowUturnLeftIcon } 
+          onClick={ () => navigate(-1) } 
+          variant='solid' 
+          color='red'
+          tooltip='Regresar'
+        />
+
+        <form className='w-full px-5 lg:px-40' onSubmit={(e) => handleGuardarClick(e)}>
+
+          <Title className='mt-4'>Datos del acuerdo</Title>
+          <Select
+            className='mt-1'
             value={formData.responsablec_id}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                responsablec_id: e.target.value,
-              })
-            }
+            onValueChange={(value) => setFormData({ ...formData, responsablec_id: value })}
           >
-            <option value="">Responsable a cumplir</option>
+            <SelectItem value='1'>Responsable a cumplir</SelectItem>
             {responsables.map((responsable) => (
-              <option key={responsable._id} value={responsable._id}>
+              <SelectItem key={responsable._id} value={responsable._id}>
                 {responsable.nombre}
-              </option>
+              </SelectItem>
             ))}
-          </select>
+          </Select>
 
-          <select
-            className="input_acuerdo"
+          <Select
+            className='mt-1'
             value={formData.responsabler_id}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                responsabler_id: e.target.value,
-              })
-            }
+            onValueChange={(value) => setFormData({ ...formData, responsabler_id: value })}
           >
-            <option value="">Responsable a revisión</option>
+            <SelectItem value='1'>Responsable a revisión</SelectItem>
             {responsables.map((responsable) => (
-              <option key={responsable._id} value={responsable._id}>
+              <SelectItem key={responsable._id} value={responsable._id}>
                 {responsable.nombre}
-              </option>
+              </SelectItem>
             ))}
-          </select>
+          </Select>
 
-          <h4 className="inf-gen">Información general</h4>
-          <div className="titulo_fecha">
-            <input
-              className="titulo input_acuerdo"
-              type="text"
-              placeholder="Título"
+          <Title className='mt-4'>Información general</Title>
+          <div className='flex flex-wrap md:flex-nowrap gap-4'>
+            <TextInput
+              className='mt-1'
+              placeholder='Título'
               value={formData.acuerdo}
               onChange={(e) =>
                 setFormData({ ...formData, acuerdo: e.target.value })
               }
             />
-            <input
-              className="fecha input_acuerdo"
-              type="text"
-              placeholder="Fecha de compromiso (DD-MM-YY)"
+
+            <TextInput
+              className='mt-1'
+              placeholder='Fecha de compromiso (DD-MM-YY)'
               value={formData.fecha}
+              type='date'
               onChange={(e) =>
                 setFormData({ ...formData, fecha: e.target.value })
               }
             />
-          </div>
-          <div className="">
-            <input
-              type="text"
-              placeholder="Descripción"
-              className="edit-text"
+
+            <TextInput
+              className='mt-1'
+              placeholder='Descripción'
               value={formData.descripcion}
               onChange={(e) =>
                 setFormData({ ...formData, descripcion: e.target.value })
               }
             />
           </div>
-          <div className="cont-guardar">
-            <button className="guardar" onClick={handleGuardarClick}>
-              Guardar
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+
+          <Button
+            className='mt-4 w-full'
+            type='submit'
+            icon={ PaperAirplaneIcon }
+            iconPosition='right'
+            color='green'
+          >
+            Guardar
+          </Button>
+
+        </form>
+    </>
   );
 };
 

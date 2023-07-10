@@ -80,7 +80,7 @@ const Minutas = () => {
       <Metric>Minutas</Metric>
       <Divider />
 
-      <div className='w-full flex gap-5'>
+      <div className='w-full flex flex-col-reverse md:flex-row gap-5'>
 
         <form className='w-full flex gap-2'>
 
@@ -119,13 +119,6 @@ const Minutas = () => {
         </Button>
 
       </div>
-
-      {/* <div className="abajo">
-    //       <h4 className="estado">Activas</h4>
-    //       {minutaA}
-    //       <h4 className="estado">Finalizadas</h4>
-    //       {minutaF}
-    //     </div> */}
 
     <Title className='mt-4'>Activas</Title>
     {minutaA}

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "../assets/styles/inicio.css";
 import "../assets/styles/acuerdos.css";
-import { useParams } from "react-router-dom";
 import { Acuerdos } from "../components/Acuerdo";
+import { Metric, Title, Icon, Divider, Button } from "@tremor/react";
+import { PlusCircleIcon, ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 
 const MinutaSeleccionada = () => {
   const { id } = useParams();
   console.log(id);
+  const navigate = useNavigate();
 
   const [acuerdoData, setAcuerdoData] = useState(null);
   
@@ -36,25 +38,61 @@ const MinutaSeleccionada = () => {
   } 
 
   return (
-    <div className="contenedor">
-      <div className="contenedor_acuerdos">
-        <div className="arriba">
-          <div>Atras</div>
-          <div className="Botones_acuerdos">
-            <Link className="btnconclucion">
-              Conclusión de la reunión
-            </Link>
-            <Link to={`/minutas/${id}/generaracuerdo`} className="btncrearacuerdo">
-              Añadir acuerdo +
-            </Link>
-          </div>
+    // <div className="contenedor">
+    //   <div className="contenedor_acuerdos">
+    //     <div className="arriba">
+    //       <div>Atras</div>
+    //       <div className="Botones_acuerdos">
+    //         <Link className="btnconclucion">
+    //           Conclusión de la reunión
+    //         </Link>
+    //         <Link to={`/minutas/${id}/generaracuerdo`} className="btncrearacuerdo">
+    //           Añadir acuerdo +
+    //         </Link>
+    //       </div>
+    //     </div>
+    //     <div className="abajo">
+    //       <h4 className="tituloMinuta_Acuerdo">{id}</h4>
+    //       {AcuerdoD}
+    //     </div>
+    //   </div>
+    // </div>
+    <>
+      <div className='w-full flex justify-between flex-wrap'>
+
+        <Icon className='w-10 h-10 cursor-pointer' 
+          icon={ ArrowUturnLeftIcon } 
+          onClick={ () => navigate(-1) } 
+          variant='solid' 
+          color='red'
+          tooltip='Regresar'
+        />
+
+        <div className='flex gap-1 md:gap-4 mt-4 md:mt-0'>
+          <Button
+            variant='secondary'
+            color='red'
+          >
+            Conclusion de la reunión
+          </Button>
+
+          <Button
+            icon={ PlusCircleIcon }
+            iconPosition='right'
+            color='red'
+            onClick={ () => navigate(`/Dash/minutas/${id}/generaracuerdo`) }
+          >
+            Añadir acuerdo
+          </Button>
         </div>
-        <div className="abajo">
-          <h4 className="tituloMinuta_Acuerdo">{id}</h4>
-          {AcuerdoD}
-        </div>
+
       </div>
-    </div>
+
+      <Title className='mt-4 md:mt-7'>
+        { id }
+      </Title>
+      <Divider className='mt-2'/>
+    </>
   );
 };
 
