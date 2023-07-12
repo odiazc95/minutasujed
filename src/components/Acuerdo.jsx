@@ -66,13 +66,13 @@ export const Acuerdos = (acuerdo) => {
           </button>
           {eliminarAcuerdoVisible && <EliminarAcuerdo id={acuerdo._id} />}
           <Link  
-          to={`/acuerdos/editar/${acuerdo._id}`} 
+          to={`/Dash/acuerdos/editar/${acuerdo._id}`} 
           className="editar btn-acuerdo">
             <MdModeEdit />
           </Link>
         </div>
         <Link
-          to={`/minutas/${acuerdo._id}/seguimiento`}
+          to={`/Dash/minutas/${acuerdo._id}/seguimiento`}
           className="detallesAcuerdo btn-acuerdo"
         >
           <AiFillFileText className="icon-acuerdo" />

@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import "../assets/styles/inicio.css";
 import "../assets/styles/acuerdos.css";
 import { Acuerdos } from "../components/Acuerdo";
-import { Metric, Title, Icon, Divider, Button } from "@tremor/react";
+import { Text, Title, Icon, Divider, Button } from "@tremor/react";
 import { PlusCircleIcon, ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 
 const MinutaSeleccionada = () => {
@@ -12,13 +12,18 @@ const MinutaSeleccionada = () => {
   console.log(id);
   const navigate = useNavigate();
 
-  const [acuerdoData, setAcuerdoData] = useState(null);
+  const [acuerdoData, setAcuerdoData] = useState([]);
+
+  useEffect(() => {
+    console.log(acuerdoData)
+  }, [acuerdoData])
   
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:3001/agreement/`);
-        setAcuerdoData(response.data);
+        // setAcuerdoData(response.data);
+        setAcuerdoData(response.data.filter((u) => u.minuta_id ===id));
       } catch (error) {
         console.error(error);
       }
@@ -27,15 +32,15 @@ const MinutaSeleccionada = () => {
     fetchData();
   }, []);
 
-  let AcuerdoD;
+  // let AcuerdoD;
   
-  if (acuerdoData) {
-    AcuerdoD = acuerdoData
-      .filter((u) => u.minuta_id ===id)
-      .map((u) => (
-        <Acuerdos key={u.id} {...u}  />
-      ));
-  } 
+  // if (acuerdoData) {
+  //   AcuerdoD = acuerdoData
+  //     .filter((u) => u.minuta_id ===id)
+  //     .map((u) => (
+  //       <Acuerdos key={u.id} {...u}  />
+  //     ));
+  // } 
 
   return (
     // <div className="contenedor">
@@ -92,6 +97,15 @@ const MinutaSeleccionada = () => {
         { id }
       </Title>
       <Divider className='mt-2'/>
+      {
+        acuerdoData.length > 0 
+        ? acuerdoData.map((u) => (
+          <Acuerdos key={u.id} {...u}  />
+        ))
+        : <Text className='mt-4'>
+            No hay acuerdos registrados
+          </Text>
+      }
     </>
   );
 };
