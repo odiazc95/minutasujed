@@ -35,7 +35,7 @@ function Login() {
                 console.log("Inicio de sesión exitoso");
                 Cookies.set("idUser", user._id, { path: "/" });
                 // window.location.href = "/inicio";
-                navigate('/inicio');
+                navigate('/Dash/inicio');  
               } else {
                 console.log("Credenciales inválidas");
               }
@@ -50,7 +50,7 @@ function Login() {
       .catch((error) => {
         console.error('Error al obtener los usuarios:', error);
       });
-      navigate('/Dash/inicio');
+      // navigate('/Dash/inicio');
   };
 
   return (
