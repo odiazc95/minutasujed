@@ -224,7 +224,7 @@ const NuevaMinutas = () => {
           value={datosMinuta.responsable}
           onChange={handleChange}
         /> */}
-        <div className="w-full flex gap-3">
+        <div className="w-full flex flex-col md:flex-row gap-3">
           <div className="w-full">
             <Subtitle className="mt-2">Fecha</Subtitle>
             <TextInput
