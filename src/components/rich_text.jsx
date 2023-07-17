@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import JoditEditor from "jodit-react";
 import { useEffect } from "react";
 
@@ -9,28 +9,17 @@ import { useEffect } from "react";
  * @param {string} props.propName - Name of the property to be set in the object
  * @returns {JSX.Element}
  */
-const EditText = ({ value = '', setValue, propName = 'descripcion' }) => {
+const EditText = ({ value = '', setValue }) => {
 
 	const editor = useRef(null);
-	const [content, setContent] = useState('');
-
-	useEffect(() => {
-		if ( value.length === 0 ) return;
-		setContent(value);
-	}, [value]);
-
-	useEffect(() => {
-		if (editor.current) {
-			setValue(( prev ) => ({ ...prev, [propName]: content }))
-		}
-	}, [content]);
 
 	return (
 		<>
 			<JoditEditor
 				ref={editor}
-				value={content}
-				onChange={(newContent) => setContent(newContent)}
+				value={value}
+				onBlur={(newContent) => setValue(newContent)}
+				onChange={(newContent) => {}}
 			/>
 		</>
 	);

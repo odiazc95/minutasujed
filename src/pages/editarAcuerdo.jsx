@@ -19,6 +19,7 @@ const EditarAcuerdo = () => {
     fecha: "",
     descripcion: ""
   });
+  const [ editableDescription, setEditableDescription ] = useState('');
 
   const navigate = useNavigate();
 
@@ -28,6 +29,7 @@ const EditarAcuerdo = () => {
         const response = await axios.get(`http://localhost:3001/agreement/${idA}`);
         setAcuerdoData(response.data);
         setFormData(response.data);
+        setEditableDescription(response.data.descripcion);
       } catch (error) {
         console.error(error);
       }
@@ -69,7 +71,8 @@ const EditarAcuerdo = () => {
         const response = await axios.put(`http://localhost:3001/agreement/${idA}`, {
           ...formData,
           responsablec_id: responsableCumplir._id,
-          responsabler_id: responsableRevision._id
+          responsabler_id: responsableRevision._id,
+          descripcion: editableDescription
         });
         if (response) {
           Swal.fire({
@@ -239,7 +242,7 @@ const EditarAcuerdo = () => {
             value={formData.descripcion}
             onChange={handleInputChange}
           /> */}
-          <EditText value={ formData.descripcion }  setValue={ setFormData }/>
+          <EditText value={ editableDescription } setValue={ setEditableDescription } />
 
           <Button
             className='w-full mt-4'

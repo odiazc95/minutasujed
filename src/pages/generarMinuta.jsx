@@ -4,7 +4,7 @@ import axios from "axios";
 import EditText from "../components/rich_text";
 import "../assets/styles/generarMinuta.css";
 import Swal from "sweetalert2";
-import { Title, Icon, Button, TextInput, Subtitle } from "@tremor/react";
+import { Title, Icon, Button, TextInput, Subtitle, Select, SelectItem } from "@tremor/react";
 import { ArrowUturnLeftIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 
 const NuevaMinutas = () => {
@@ -21,6 +21,7 @@ const NuevaMinutas = () => {
     descripcion: "",
     estatus: "Activo"
   });
+  const [ editableDescription, setEditableDescription ] = useState('');
 
   const navigate = useNavigate();
 
@@ -37,6 +38,7 @@ const NuevaMinutas = () => {
     fetchData();
   }, []);
 
+
   const handleChange = (e) => {
     setDatosMinuta({
       ...datosMinuta,
@@ -46,19 +48,19 @@ const NuevaMinutas = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const responsableEncontrado = usersData.find(
-      (user) => user.nombre === datosMinuta.responsable
-    );
-
-    if (responsableEncontrado) {
+    // const responsableEncontrado = usersData.find(
+    //   (user) => user.nombre === datosMinuta.responsable
+    // );
+    
+    // if (responsableEncontrado) {
       axios
         .post("http://localhost:3001/minutes/", {
           ...datosMinuta,
-          responsable: responsableEncontrado._id
+          descripcion: editableDescription,
+          // responsable: responsableEncontrado._id
         })
         .then((response) => {
-          console.log(response.data);
+          console.log(response.data)
           Swal.fire({
             title: "Minuta Guardada",
             icon: "success",
@@ -77,14 +79,14 @@ const NuevaMinutas = () => {
             confirmButtonText: "Cool"
           });
         });
-    } else {
-      Swal.fire({
-        title: "Error!",
-        text: "Responsable no encontrado",
-        icon: "error",
-        confirmButtonText: "Cool"
-      });
-    }
+    // } else {
+    //   Swal.fire({
+    //     title: "Error!",
+    //     text: "Responsable no encontrado",
+    //     icon: "error",
+    //     confirmButtonText: "Cool"
+    //   });
+    // }
   };
 
   return (
@@ -201,14 +203,27 @@ const NuevaMinutas = () => {
         />
 
         <Subtitle className="mt-2">Responsable</Subtitle>
-        <TextInput
+        <Select
+          className='w-full mt-1'
+          name='responsable'
+          value={datosMinuta.responsable}
+          onValueChange={(value) => setDatosMinuta({ ...datosMinuta, responsable: value })}
+        >
+          <SelectItem value=''>Selecciona un usuario</SelectItem>
+          {usersData.map((user) => (
+            <SelectItem key={user._id} value={user._id}>
+              {user.nombre}
+            </SelectItem>
+          ))}
+        </Select>
+        {/* <TextInput
           className='w-full mt-1'
           label='Responsable'
           name='responsable'
           placeholder='Responsable'
           value={datosMinuta.responsable}
           onChange={handleChange}
-        />
+        /> */}
 
         <Subtitle className="mt-2">Fecha</Subtitle>
         <div className='flex flex-col lg:flex-row gap-1'>
@@ -277,17 +292,30 @@ const NuevaMinutas = () => {
         /> */}
 
         <Subtitle className="mt-2">Descripcion</Subtitle>
-        <EditText value={ datosMinuta.descripcion } setValue={ setDatosMinuta }/>
+        <EditText value={ editableDescription } setValue={ setEditableDescription } />
 
         <Subtitle className="mt-2">Invitados</Subtitle>
-        <TextInput
+        {/* <TextInput
           className='w-full mt-1'
           label='Invitados'
           name='usuario_id'
           placeholder='Invitados'
           value={datosMinuta.usuario_id}
           onChange={handleChange}
-        />
+        /> */}
+        <Select
+          className='w-full mt-1'
+          name='usuario_id'
+          value={datosMinuta.usuario_id}
+          onValueChange={(value) => setDatosMinuta({ ...datosMinuta, usuario_id: value })}
+        >
+          <SelectItem value=''>Selecciona un usuario</SelectItem>
+          {usersData.map((user) => (
+            <SelectItem key={user._id} value={user._id}>
+              {user.nombre}
+            </SelectItem>
+          ))}
+        </Select>
 
         <Button
           className='w-full mt-4'

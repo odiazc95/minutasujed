@@ -20,6 +20,7 @@ const NuevaMinutas = () => {
     descripcion: "",
     estatus: ""
   });
+  const [ editableDescription, setEditableDescription ] = useState('');
 
   const navigate = useNavigate();
 
@@ -29,6 +30,7 @@ const NuevaMinutas = () => {
         const response = await axios.get(`http://localhost:3001/agreement/${idA}`);
         setAcuerdoData(response.data);
         setFormData(response.data);
+        setEditableDescription(response.data.descripcion);
       } catch (error) {
         console.error(error);
       }
@@ -46,7 +48,10 @@ const NuevaMinutas = () => {
     e.preventDefault();
     // console.log(formData);
     try {
-      const response = await axios.put(`http://localhost:3001/agreement/${idA}`, formData);
+      const response = await axios.put(`http://localhost:3001/agreement/${idA}`, {
+        ...formData,
+        descripcion: editableDescription
+      });
       if (response) {
         Swal.fire({
           title: 'Acuerdo Guardado',
@@ -226,7 +231,7 @@ const NuevaMinutas = () => {
               value={acuerdoData.descripcio}
               onChange={ handleInputChange }
             /> */}
-          <EditText value={ acuerdoData.descripcion } setValue={ setFormData }/>
+          <EditText value={ editableDescription } setValue={ setEditableDescription } />
 
           <Button
             className='w-full mt-4'

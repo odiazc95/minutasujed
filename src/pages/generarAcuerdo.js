@@ -20,6 +20,7 @@ const NuevoAcuerdo = () => {
     estatus: "Pendiente",
     reporte_estado:"En revision"
   });
+  const [ editableDescription, setEditableDescription ] = useState('');
 
   const navigate = useNavigate();
 
@@ -40,8 +41,10 @@ const NuevoAcuerdo = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3001/agreement/",
-        formData
+        "http://localhost:3001/agreement/", {
+          ...formData,
+          descripcion: editableDescription
+        }
       );
       console.log("Datos guardados exitosamente: ", response);
       Swal.fire({
@@ -225,7 +228,7 @@ const NuevoAcuerdo = () => {
             /> */}
           </div>
           <Subtitle className="mt-2">Descripción</Subtitle>
-          <EditText value={ formData.descripcion } setValue={ setFormData } />
+          <EditText value={ editableDescription } setValue={ setEditableDescription } />
 
           <Button
             className='mt-4 w-full'

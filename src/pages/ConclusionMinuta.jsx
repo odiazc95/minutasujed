@@ -7,14 +7,12 @@ import EditText from "../components/rich_text";
 
 const ConclusionMinuta = () => {
 
-    const [ formData, setFormData ] = useState({
-        conclusion: '',
-    })
+    const [ conclusion, setConclusion ] = useState('');
     const { idA } = useParams();
     const navigate = useNavigate();
 
     const handleSubmit = () => {
-        console.log(formData)
+        console.log(conclusion)
         // HERE GOES THE ENDPOINT CALL
     }
 
@@ -53,7 +51,7 @@ const ConclusionMinuta = () => {
                 value={textAreaDescription}
                 onChange={ (e) => setTextAreaDescription(e.target.value) }
             /> */}
-            <EditText value={ formData.newPassword } setValue={ setFormData } propName="conclusion"/>
+            <EditText value={ conclusion } setValue={ setConclusion }/>
 
             <Button
                 className='w-full mt-4'

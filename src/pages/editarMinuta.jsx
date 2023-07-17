@@ -25,6 +25,7 @@ const EditarMinuta = () => {
     lugar: "",
     usuario_id: [],
   });
+  const [ editableDescription, setEditableDescription ] = useState('');
 
   const navigate = useNavigate();
 
@@ -34,6 +35,7 @@ const EditarMinuta = () => {
         const response = await axios.get(`http://localhost:3001/minutes/${idM}`);
         setMinutaData(response.data);
         setFormData(response.data);
+        setEditableDescription(response.data.descripcion);
       } catch (error) {
         console.error(error);
       }
@@ -64,46 +66,46 @@ const EditarMinuta = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
-    // try {
-    //   const responsableEncontrado = usersData.find(
-    //     (user) => user.nombre === formData.responsable
-    //   );
+    try {
+      const responsableEncontrado = usersData.find(
+        (user) => user.nombre === formData.responsable
+      );
 
-    //   if (responsableEncontrado) {
-    //     const response = await axios.put(`http://localhost:3001/minutes/${idM}`, {
-    //       ...formData,
-    //       responsable: responsableEncontrado._id
-    //     });
+      if (responsableEncontrado) {
+        const response = await axios.put(`http://localhost:3001/minutes/${idM}`, {
+          ...formData,
+          responsable: responsableEncontrado._id,
+          descripcion: editableDescription
+        });
 
-    //     if (response) {
-    //       Swal.fire({
-    //         title: "Minuta Guardada",
-    //         text: "Los datos se han guardado",
-    //         icon: "success",
-    //         confirmButtonText: "Cool"
-    //       }).then(() => {
-    //         // window.location.reload();
-    //         navigate('/Dash/minutas')
-    //       });
-    //     }
-    //   } else {
-    //     Swal.fire({
-    //       title: "Error!",
-    //       text: "Responsable no encontrado",
-    //       icon: "error",
-    //       confirmButtonText: "Cool"
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    //   Swal.fire({
-    //     title: "Error!",
-    //     text: "Error al guardar los datos",
-    //     icon: "error",
-    //     confirmButtonText: "Cool"
-    //   });
-    // }
+        if (response) {
+          Swal.fire({
+            title: "Minuta Guardada",
+            text: "Los datos se han guardado",
+            icon: "success",
+            confirmButtonText: "Cool"
+          }).then(() => {
+            // window.location.reload();
+            navigate('/Dash/minutas')
+          });
+        }
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: "Responsable no encontrado",
+          icon: "error",
+          confirmButtonText: "Cool"
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title: "Error!",
+        text: "Error al guardar los datos",
+        icon: "error",
+        confirmButtonText: "Cool"
+      });
+    }
   };
 
   if (minutaData) {
@@ -213,7 +215,7 @@ const EditarMinuta = () => {
           value={formData.descripcion}
           onChange={handleInputChange}
         /> */}
-        <EditText value={ formData.descripcion } setValue={ setFormData } />
+        <EditText value={ editableDescription } setValue={ setEditableDescription } />
 
         <Subtitle className="mt-2">Invitados</Subtitle>
         <TextInput

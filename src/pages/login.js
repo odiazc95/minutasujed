@@ -25,8 +25,6 @@ function Login() {
       .then((users) => {
         const user = users.find((user) => user.email === email);
         console.log(user);
-        // navigate('/Dash/inicio');
-        // Cookies.set("idUser", user._id, { path: "/" });
         if (user) {
           console.log('Puede');
           navigate('/Dash/inicio');

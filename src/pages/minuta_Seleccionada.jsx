@@ -13,10 +13,6 @@ const MinutaSeleccionada = () => {
   const navigate = useNavigate();
 
   const [acuerdoData, setAcuerdoData] = useState([]);
-
-  useEffect(() => {
-    console.log(acuerdoData)
-  }, [acuerdoData])
   
   useEffect(() => {
     const fetchData = async () => {
