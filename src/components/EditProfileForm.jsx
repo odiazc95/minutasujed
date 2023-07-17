@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Button, Title, TextInput, Subtitle } from "@tremor/react"
 import { ArchiveBoxXMarkIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
 
-export const EditProfileForm = ({ userData, setIsEditOpen, updateProfile }) => {
+export const EditProfileForm = ({ userData, setIsEditOpen, updateProfilePage, userId }) => {
 
     const [ userFormData, setUserFormData ] = useState({
         nombre: '',
@@ -10,7 +11,9 @@ export const EditProfileForm = ({ userData, setIsEditOpen, updateProfile }) => {
         apellido_materno: '',
         email: '',
         cargo: '',
-        area: ''
+        area: '',
+        rfc: '',
+        // matricula: '',
     });
 
     useEffect(() => {
@@ -21,6 +24,11 @@ export const EditProfileForm = ({ userData, setIsEditOpen, updateProfile }) => {
             email: userData?.email,
             cargo: userData?.cargo,
             area: userData?.area,
+            // matricula: userData?.matricula,
+            rfc: userData?.rfc,
+            email: userData?.email,
+            password: userData?.password,
+            token: userData?.token,
         })
     }, [ userData ])
 
@@ -31,13 +39,24 @@ export const EditProfileForm = ({ userData, setIsEditOpen, updateProfile }) => {
         })
     }
 
+    const updateProfile = async() => {
+        try {
+            const response = await axios.put(`http://localhost:3001/users/${userId}`, userFormData);
+            if ( response.status === 200 ) {
+                setIsEditOpen(false);
+            }
+        } catch (error) {
+            console.log(error)   
+        }
+    }
+
     const onSendForm = async(e) => {
         e.preventDefault();
-        console.log(userFormData) // ADD REQUEST CALL HERE
-        setIsEditOpen(false);
+        await updateProfile();
+
         // IN ORDER TO SHOW THE NEW DATA IN THE PROFILE PAGE, WE MAKE A CALL TO THE ENDPOINT AGAIN
         // THIS IS THE REASON WHY WE PASS THE updateProfile FUNCTION AS A PROP
-        await updateProfile();
+        await updateProfilePage();
     }
 
     return (
@@ -63,6 +82,7 @@ export const EditProfileForm = ({ userData, setIsEditOpen, updateProfile }) => {
                         <TextInput
                             label='Apellido Paterno'
                             placeholder='Apellido Paterno'
+                            name="apellido_paterno"
                             value={userFormData.apellido_paterno}
                             onChange={onHanldeInputChange}
                         />
@@ -93,8 +113,31 @@ export const EditProfileForm = ({ userData, setIsEditOpen, updateProfile }) => {
                             onChange={onHanldeInputChange}
                         />
                     </div>
+                </div>
 
+                <div className="flex flex-col md:flex-row gap-3">
+                    <div className="w-full">
+                        <Subtitle> RFC </Subtitle>
+                        <TextInput
+                            label='RFC'
+                            placeholder='RFC'
+                            name="rfc"
+                            value={userFormData.rfc}
+                            onChange={onHanldeInputChange}
+                        />
 
+                    </div>
+
+                    {/* <div className="w-full">
+                        <Subtitle> Matricula </Subtitle>
+                        <TextInput
+                            label='Matricula'
+                            placeholder='Matricula'
+                            name="matricula"
+                            value={userFormData.matricula}
+                            onChange={onHanldeInputChange}
+                        />
+                    </div> */}
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-3">

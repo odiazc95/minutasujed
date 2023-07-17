@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Button, Title, TextInput, Subtitle } from "@tremor/react"
 import { ArchiveBoxXMarkIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { useEffect } from "react";
+import axios from "axios";
 
-export const EditPasswordForm = ({ setIsEditOpen, updateProfile }) => {
+export const EditPasswordForm = ({ setIsEditOpen, updateProfilePage, userId }) => {
 
     const [ newPassowrd, setNewPassword ] = useState('');
 
@@ -10,13 +12,24 @@ export const EditPasswordForm = ({ setIsEditOpen, updateProfile }) => {
         setNewPassword(e.target.value);
     }
 
+    const updateProfile = async() => {
+        try {
+            const response = await axios.put(`http://localhost:3001/users/${userId}`, { password: newPassowrd });
+            if ( response.status === 200 ) {
+                setIsEditOpen(false);
+            }
+        } catch (error) {
+            console.log(error)   
+        }
+    }
+
     const onSendForm = async(e) => {
         e.preventDefault();
         if ( newPassowrd.length === 0 ) return;
-        setIsEditOpen(false);
+        await updateProfile();
         // IN ORDER TO SHOW THE NEW DATA IN THE PROFILE PAGE, WE MAKE A CALL TO THE ENDPOINT AGAIN
         // THIS IS THE REASON WHY WE PASS THE updateProfile FUNCTION AS A PROP
-        await updateProfile();
+        await updateProfilePage();
     }
 
     return (

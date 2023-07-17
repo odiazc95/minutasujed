@@ -25,12 +25,14 @@ function Login() {
       .then((users) => {
         const user = users.find((user) => user.email === email);
         console.log(user);
-
+        // navigate('/Dash/inicio');
+        // Cookies.set("idUser", user._id, { path: "/" });
         if (user) {
           console.log('Puede');
+          navigate('/Dash/inicio');
           bcrypt.compare(password, user.password)
             .then((passwordMatch) => {
-              console.log('Naa');
+              console.log('Naa');  
               if (passwordMatch) {
                 console.log("Inicio de sesión exitoso");
                 Cookies.set("idUser", user._id, { path: "/" });
