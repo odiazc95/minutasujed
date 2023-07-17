@@ -82,7 +82,7 @@ export const Activa = (minuta) => {
 
       //   </div>
       // </div>
-      <Card className='w-full md:max-w-xl'>
+      <Card className='w-full md:max-w-xl mb-5'>
         <div className='flex'>
           <div className='flex flex-col w-8/12'>
             <div className='flex items-center gap-2'>
@@ -163,7 +163,7 @@ export const Finalizada = (minuta) => {
 
   if (minuta.estatus === "Inactivo") {
     return (
-      <Card className='w-full md:max-w-xl'>
+      <Card className='w-full md:max-w-xl mb-5'>
         <div className='flex'>
           <div className='flex flex-col w-8/12'>
             <div className='flex items-center gap-2'>

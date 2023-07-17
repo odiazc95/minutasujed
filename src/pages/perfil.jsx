@@ -56,13 +56,13 @@ const Perfil = () =>{
 
 					{
 						isEditProfileFormOpen && !isEditPasswordFormOpen && (
-							<EditProfileForm userData={ userData } setIsEditOpen={ setIsEditProfileFormOpen }/>
+							<EditProfileForm userData={ userData } setIsEditOpen={ setIsEditProfileFormOpen } updateProfile={ fetchData }/>
 						)
 					}
 
 					{
 						isEditPasswordFormOpen && !isEditProfileFormOpen && (
-							<EditPasswordForm setIsEditOpen={ setIsEditPasswordFormOpen }/>
+							<EditPasswordForm setIsEditOpen={ setIsEditPasswordFormOpen } updateProfile={ fetchData }/>
 						)
 					}
 

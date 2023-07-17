@@ -7,6 +7,7 @@ const InicioPage = lazy(() => import('../pages/inicio'));
 const MinutasPage = lazy(() => import('../pages/minutas'));
 const GenerarMinutaPage = lazy(() => import('../pages/generarMinuta'));
 const MinutaSeleccionadaPage = lazy(() => import('../pages/minuta_Seleccionada'));
+const ConclusionMinutaPage = lazy(() => import('../pages/ConclusionMinuta'));
 const GenerarAcuerdoPage = lazy(() => import('../pages/generarAcuerdo'));
 const SeguimientoPage = lazy(() => import('../pages/seguimiento'));
 const PerfilPage = lazy(() => import('../pages/perfil'));
@@ -29,6 +30,7 @@ const DashRoutes = () => {
                         <Route path="/minuta/generar" element={ <GenerarMinutaPage /> } />
                         <Route path="/minutas/:id" element={ <MinutaSeleccionadaPage /> } />
                         <Route path="/minutas/:idA/generaracuerdo" element={ <GenerarAcuerdoPage /> } />
+                        <Route path="/minutas/:idA/conclusion" element={ <ConclusionMinutaPage /> } />
                         <Route path="/minutas/:idA/seguimiento" element={ <SeguimientoPage /> } />
                         <Route path="/perfil" element={ <PerfilPage /> } />
                         <Route path="/usuarios" element={ <UsuariosPage /> } />

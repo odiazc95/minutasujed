@@ -4,7 +4,7 @@ import EditText from "../components/rich_text";
 import "../assets/styles/generarAcuerdo.css";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Title, Icon, Button, Select, SelectItem, TextInput } from "@tremor/react";
+import { Title, Icon, Button, Select, SelectItem, TextInput, Subtitle } from "@tremor/react";
 import { ArrowUturnLeftIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 
 const NuevoAcuerdo = () => {
@@ -50,7 +50,7 @@ const NuevoAcuerdo = () => {
         icon: "success",
         confirmButtonText: "Cool",
       }).then(() => {
-        navigate(`/minutas/${idA}`);
+        navigate(`/Dash/minutas/${idA}`);
       });
     } catch (error) {
       console.error("Error al guardar los datos:", error);
@@ -160,6 +160,7 @@ const NuevoAcuerdo = () => {
         <form className='w-full px-5 lg:px-40' onSubmit={(e) => handleGuardarClick(e)}>
 
           <Title className='mt-4'>Datos del acuerdo</Title>
+          <Subtitle className='mt-2'>Responsable a cumplir</Subtitle>
           <Select
             className='mt-1'
             value={formData.responsablec_id}
@@ -172,7 +173,8 @@ const NuevoAcuerdo = () => {
               </SelectItem>
             ))}
           </Select>
-
+          
+          <Subtitle className='mt-2'>Responsable a revisión</Subtitle>
           <Select
             className='mt-1'
             value={formData.responsabler_id}
@@ -188,34 +190,42 @@ const NuevoAcuerdo = () => {
 
           <Title className='mt-4'>Información general</Title>
           <div className='flex flex-wrap md:flex-nowrap gap-4'>
-            <TextInput
-              className='mt-1'
-              placeholder='Título'
-              value={formData.acuerdo}
-              onChange={(e) =>
-                setFormData({ ...formData, acuerdo: e.target.value })
-              }
-            />
+            <div className="w-full">
+              <Subtitle className="mt-2">Titluo</Subtitle>
+              <TextInput
+                className='mt-1'
+                placeholder='Título'
+                value={formData.acuerdo}
+                onChange={(e) =>
+                  setFormData({ ...formData, acuerdo: e.target.value })
+                }
+              />
+            </div>
+            
+            <div className="w-full">
+              <Subtitle className="mt-2">Fecha de compromiso</Subtitle>
+              <TextInput
+                className='mt-1'
+                placeholder='Fecha de compromiso (DD-MM-YY)'
+                value={formData.fecha}
+                type='date'
+                onChange={(e) =>
+                  setFormData({ ...formData, fecha: e.target.value })
+                }
+              />
+            </div>
 
-            <TextInput
-              className='mt-1'
-              placeholder='Fecha de compromiso (DD-MM-YY)'
-              value={formData.fecha}
-              type='date'
-              onChange={(e) =>
-                setFormData({ ...formData, fecha: e.target.value })
-              }
-            />
-
-            <TextInput
+            {/* <TextInput
               className='mt-1'
               placeholder='Descripción'
               value={formData.descripcion}
               onChange={(e) =>
                 setFormData({ ...formData, descripcion: e.target.value })
               }
-            />
+            /> */}
           </div>
+          <Subtitle className="mt-2">Descripción</Subtitle>
+          <EditText value={ formData.descripcion } setValue={ setFormData } />
 
           <Button
             className='mt-4 w-full'

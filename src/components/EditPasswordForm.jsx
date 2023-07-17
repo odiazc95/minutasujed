@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Title, TextInput, Subtitle } from "@tremor/react"
 import { ArchiveBoxXMarkIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
-export const EditPasswordForm = ({ setIsEditOpen }) => {
+export const EditPasswordForm = ({ setIsEditOpen, updateProfile }) => {
 
     const [ newPassowrd, setNewPassword ] = useState('');
 
@@ -10,10 +10,13 @@ export const EditPasswordForm = ({ setIsEditOpen }) => {
         setNewPassword(e.target.value);
     }
 
-    const onSendForm = (e) => {
+    const onSendForm = async(e) => {
         e.preventDefault();
         if ( newPassowrd.length === 0 ) return;
         setIsEditOpen(false);
+        // IN ORDER TO SHOW THE NEW DATA IN THE PROFILE PAGE, WE MAKE A CALL TO THE ENDPOINT AGAIN
+        // THIS IS THE REASON WHY WE PASS THE updateProfile FUNCTION AS A PROP
+        await updateProfile();
     }
 
     return (
@@ -44,6 +47,7 @@ export const EditPasswordForm = ({ setIsEditOpen }) => {
                         variant="secondary"
                         icon={ ArchiveBoxXMarkIcon }
                         iconPosition='right'
+                        type="button"
                     >
                         Cancelar
                     </Button>

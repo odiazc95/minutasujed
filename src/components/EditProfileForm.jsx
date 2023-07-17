@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Title, TextInput, Subtitle } from "@tremor/react"
 import { ArchiveBoxXMarkIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
-export const EditProfileForm = ({ userData, setIsEditOpen }) => {
+export const EditProfileForm = ({ userData, setIsEditOpen, updateProfile }) => {
 
     const [ userFormData, setUserFormData ] = useState({
         nombre: '',
@@ -20,7 +20,7 @@ export const EditProfileForm = ({ userData, setIsEditOpen }) => {
             apellido_materno: userData?.apellido_materno,
             email: userData?.email,
             cargo: userData?.cargo,
-            area: userData?.area
+            area: userData?.area,
         })
     }, [ userData ])
 
@@ -31,9 +31,13 @@ export const EditProfileForm = ({ userData, setIsEditOpen }) => {
         })
     }
 
-    const onSendForm = (e) => {
+    const onSendForm = async(e) => {
         e.preventDefault();
+        console.log(userFormData) // ADD REQUEST CALL HERE
         setIsEditOpen(false);
+        // IN ORDER TO SHOW THE NEW DATA IN THE PROFILE PAGE, WE MAKE A CALL TO THE ENDPOINT AGAIN
+        // THIS IS THE REASON WHY WE PASS THE updateProfile FUNCTION AS A PROP
+        await updateProfile();
     }
 
     return (
@@ -94,21 +98,27 @@ export const EditProfileForm = ({ userData, setIsEditOpen }) => {
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-3">
-                    <TextInput
-                        label='Cargo'
-                        placeholder='Cargo'
-                        name="cargo"
-                        value={userFormData.cargo}
-                        onChange={onHanldeInputChange}
-                    />
+                    <div className="w-full">
+                        <Subtitle> Cargo </Subtitle>
+                        <TextInput
+                            label='Cargo'
+                            placeholder='Cargo'
+                            name="cargo"
+                            value={userFormData.cargo}
+                            onChange={onHanldeInputChange}
+                        />
+                    </div>
 
-                    <TextInput
-                        label='Area'
-                        placeholder='Area'
-                        name="area"
-                        value={userFormData.area}
-                        onChange={onHanldeInputChange}
-                    />
+                    <div className="w-full">
+                        <Subtitle> Area </Subtitle>
+                        <TextInput
+                            label='Area'
+                            placeholder='Area'
+                            name="area"
+                            value={userFormData.area}
+                            onChange={onHanldeInputChange}
+                        />
+                    </div>
                 </div>
 
                 <div className="w-full flex flex-col items-center gap-3 mt-5">
@@ -119,6 +129,7 @@ export const EditProfileForm = ({ userData, setIsEditOpen }) => {
                         variant="secondary"
                         icon={ ArchiveBoxXMarkIcon }
                         iconPosition='right'
+                        type="button"
                     >
                         Cancelar
                     </Button>

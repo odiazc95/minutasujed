@@ -4,7 +4,7 @@ import axios from "axios";
 import EditText from "../components/rich_text";
 import "../assets/styles/generarMinuta.css";
 import Swal from "sweetalert2";
-import { Title, Icon, Button, TextInput } from "@tremor/react";
+import { Title, Icon, Button, TextInput, Subtitle } from "@tremor/react";
 import { ArrowUturnLeftIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 
 const NuevaMinutas = () => {
@@ -46,7 +46,6 @@ const NuevaMinutas = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(datosMinuta)
 
     const responsableEncontrado = usersData.find(
       (user) => user.nombre === datosMinuta.responsable
@@ -191,14 +190,17 @@ const NuevaMinutas = () => {
       />
 
       <form className='w-full px-5 lg:px-40' onSubmit={handleSubmit}>
+        <Subtitle className="mt-2">Asunto</Subtitle>
         <TextInput
-          className='w-full mt-4'
+          className='w-full mt-1'
           label='Asunto'
           name='asunto'
           placeholder='Asunto'
           value={datosMinuta.asunto}
           onChange={handleChange}
         />
+
+        <Subtitle className="mt-2">Responsable</Subtitle>
         <TextInput
           className='w-full mt-1'
           label='Responsable'
@@ -207,19 +209,24 @@ const NuevaMinutas = () => {
           value={datosMinuta.responsable}
           onChange={handleChange}
         />
+
+        <Subtitle className="mt-2">Fecha</Subtitle>
         <div className='flex flex-col lg:flex-row gap-1'>
           <TextInput
             className='w-full lg:w-1/2 mt-1'
             label='Fecha'
             name='fecha'
+            type='date'
             placeholder='Fecha'
             value={datosMinuta.fecha}
             onChange={handleChange}
           />
+
+          <Subtitle className="mt-2">Hora</Subtitle>
           <TextInput
             className='w-full lg:w-1/2 mt-1'
             label='Hora'
-            type='date'
+            type='time'
             name='hora'
             placeholder='Hora'
             value={datosMinuta.hora}
@@ -228,6 +235,8 @@ const NuevaMinutas = () => {
         </div>
         
         <Title className='mt-4'>Informacion general</Title>
+
+        <Subtitle className="mt-2">Tema</Subtitle>
         <TextInput
           className='w-full mt-1'
           label='Tema'
@@ -236,6 +245,8 @@ const NuevaMinutas = () => {
           value={datosMinuta.tema}
           onChange={handleChange}
         />
+
+        <Subtitle className="mt-2">Area</Subtitle>
         <TextInput
           className='w-full mt-1'
           label='Area'
@@ -244,15 +255,17 @@ const NuevaMinutas = () => {
           value={datosMinuta.area}
           onChange={handleChange}
         />
+
+        <Subtitle className="mt-2">Lugar</Subtitle>
         <TextInput
-          className='w-full mt-1'
+          className='w-full mt-1 mb-1'
           label='Lugar'
           name='lugar'
           placeholder='Lugar'
           value={datosMinuta.lugar}
           onChange={handleChange}
         />
-        <textarea
+        {/* <textarea
           className='w-full mt-1 border-[1px] border-tremor-border rounded-tremor-default px-4 py-1 bg-white hover:bg-tremor-background-muted focus:ring-2 focus:ring-tremor-brand-muted focus:border-tremor-brand-subtle focus:outline-none
           shadow-tremor-input placeholder:text-tremor-content text-tremor-content-emphasis'
           label='Descripcion'
@@ -261,7 +274,12 @@ const NuevaMinutas = () => {
           placeholder='Descripcion'
           value={datosMinuta.descripcion}
           onChange={handleChange}
-        />
+        /> */}
+
+        <Subtitle className="mt-2">Descripcion</Subtitle>
+        <EditText value={ datosMinuta.descripcion } setValue={ setDatosMinuta }/>
+
+        <Subtitle className="mt-2">Invitados</Subtitle>
         <TextInput
           className='w-full mt-1'
           label='Invitados'
@@ -270,6 +288,7 @@ const NuevaMinutas = () => {
           value={datosMinuta.usuario_id}
           onChange={handleChange}
         />
+
         <Button
           className='w-full mt-4'
           type='submit'

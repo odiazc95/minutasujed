@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 import "../assets/styles/generarMinuta.css";
 
-import { Title, Icon, Button, TextInput, Select, SelectItem } from "@tremor/react";
+import { Title, Icon, Button, TextInput, Select, SelectItem, Subtitle } from "@tremor/react";
 
 import { ArrowUturnLeftIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 
@@ -23,7 +23,7 @@ const EditarMinuta = () => {
     tema: "",
     area: "",
     lugar: "",
-    usuario_id: []
+    usuario_id: [],
   });
 
   const navigate = useNavigate();
@@ -64,44 +64,46 @@ const EditarMinuta = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const responsableEncontrado = usersData.find(
-        (user) => user.nombre === formData.responsable
-      );
+    console.log(formData)
+    // try {
+    //   const responsableEncontrado = usersData.find(
+    //     (user) => user.nombre === formData.responsable
+    //   );
 
-      if (responsableEncontrado) {
-        const response = await axios.put(`http://localhost:3001/minutes/${idM}`, {
-          ...formData,
-          responsable: responsableEncontrado._id
-        });
+    //   if (responsableEncontrado) {
+    //     const response = await axios.put(`http://localhost:3001/minutes/${idM}`, {
+    //       ...formData,
+    //       responsable: responsableEncontrado._id
+    //     });
 
-        if (response) {
-          Swal.fire({
-            title: "Minuta Guardada",
-            text: "Los datos se han guardado",
-            icon: "success",
-            confirmButtonText: "Cool"
-          }).then(() => {
-            window.location.reload();
-          });
-        }
-      } else {
-        Swal.fire({
-          title: "Error!",
-          text: "Responsable no encontrado",
-          icon: "error",
-          confirmButtonText: "Cool"
-        });
-      }
-    } catch (error) {
-      console.error(error);
-      Swal.fire({
-        title: "Error!",
-        text: "Error al guardar los datos",
-        icon: "error",
-        confirmButtonText: "Cool"
-      });
-    }
+    //     if (response) {
+    //       Swal.fire({
+    //         title: "Minuta Guardada",
+    //         text: "Los datos se han guardado",
+    //         icon: "success",
+    //         confirmButtonText: "Cool"
+    //       }).then(() => {
+    //         // window.location.reload();
+    //         navigate('/Dash/minutas')
+    //       });
+    //     }
+    //   } else {
+    //     Swal.fire({
+    //       title: "Error!",
+    //       text: "Responsable no encontrado",
+    //       icon: "error",
+    //       confirmButtonText: "Cool"
+    //     });
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    //   Swal.fire({
+    //     title: "Error!",
+    //     text: "Error al guardar los datos",
+    //     icon: "error",
+    //     confirmButtonText: "Cool"
+    //   });
+    // }
   };
 
   if (minutaData) {
@@ -115,17 +117,20 @@ const EditarMinuta = () => {
           tooltip='Regresar'
         />
 
-        <form className='w-full px-5 lg:px-40' onSubmit={handleSubmit}>
+      <form className='w-full px-5 lg:px-40' onSubmit={handleSubmit}>
+        <Subtitle className="mt-2">Asunto</Subtitle>
         <TextInput
-          className='w-full mt-4'
+          className='w-full mt-1'
           label='Asunto'
           name='asunto'
           placeholder='Asunto'
           value={formData.asunto}
           onChange={handleInputChange}
         />
+
+        <Subtitle className='mt-4'>Responsable</Subtitle>
         <Select
-          className='w-full mt-4'
+          className='w-full mt-1'
           name='responsable'
           value={formData.responsable}
           onValueChange={(value) => setFormData({ ...formData, responsable: value })}
@@ -136,28 +141,38 @@ const EditarMinuta = () => {
             </SelectItem>
           ))}
         </Select>
+
         <div className='flex flex-col lg:flex-row gap-1'>
-          <TextInput
-            className='w-full lg:w-1/2 mt-1'
-            label='Fecha'
-            type="date"
-            name='fecha'
-            placeholder='Fecha'
-            value={formData.fecha}
-            onChange={handleInputChange}
-          />
-          <TextInput
-            className='w-full lg:w-1/2 mt-1'
-            label='Hora'
-            type='time'
-            name='hora'
-            placeholder='Hora'
-            value={formData.hora}
-            onChange={handleInputChange}
-          />
+          <div className="w-full">
+            <Subtitle className='mt-2'>Fecha</Subtitle>
+            <TextInput
+              className='w-full mt-1'
+              label='Fecha'
+              type="date"
+              name='fecha'
+              placeholder='Fecha'
+              value={formData.fecha}
+              onChange={handleInputChange}
+            />
+          </div>
+          
+          <div className="w-full">
+            <Subtitle className="mt-2">Hora</Subtitle>
+            <TextInput
+              className='w-full mt-1'
+              label='Hora'
+              type='time'
+              name='hora'
+              placeholder='Hora'
+              value={formData.hora}
+              onChange={handleInputChange}
+            />
+          </div>
         </div>
         
         <Title className='mt-4'>Informacion general</Title>
+
+        <Subtitle className="mt-2">Tema</Subtitle>
         <TextInput
           className='w-full mt-1'
           label='Tema'
@@ -166,6 +181,8 @@ const EditarMinuta = () => {
           value={formData.tema}
           onChange={handleInputChange}
         />
+
+        <Subtitle className="mt-2">Area</Subtitle>
         <TextInput
           className='w-full mt-1'
           label='Area'
@@ -174,6 +191,8 @@ const EditarMinuta = () => {
           value={formData.area}
           onChange={handleInputChange}
         />
+
+        <Subtitle className="mt-2">Lugar</Subtitle>
         <TextInput
           className='w-full mt-1'
           label='Lugar'
@@ -182,7 +201,9 @@ const EditarMinuta = () => {
           value={formData.lugar}
           onChange={handleInputChange}
         />
-        <textarea
+
+        <Subtitle className="mt-2">Descripcion</Subtitle>
+        {/* <textarea
           className='w-full mt-1 border-[1px] border-tremor-border rounded-tremor-default px-4 py-1 bg-white hover:bg-tremor-background-muted focus:ring-2 focus:ring-tremor-brand-muted focus:border-tremor-brand-subtle focus:outline-none
           shadow-tremor-input placeholder:text-tremor-content text-tremor-content-emphasis'
           label='Descripcion'
@@ -191,7 +212,10 @@ const EditarMinuta = () => {
           placeholder='Descripcion'
           value={formData.descripcion}
           onChange={handleInputChange}
-        />
+        /> */}
+        <EditText value={ formData.descripcion } setValue={ setFormData } />
+
+        <Subtitle className="mt-2">Invitados</Subtitle>
         <TextInput
           className='w-full mt-1'
           label='Invitados'
@@ -200,6 +224,8 @@ const EditarMinuta = () => {
           value={formData.invitados}
           onChange={handleInputChange}
         />
+
+        
         <Button
           className='w-full mt-4'
           type='submit'

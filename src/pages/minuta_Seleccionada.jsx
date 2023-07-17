@@ -63,7 +63,7 @@ const MinutaSeleccionada = () => {
     //   </div>
     // </div>
     <>
-      <div className='w-full flex justify-between flex-wrap'>
+      <div className='w-full flex flex-col md:flex-row justify-between'>
 
         <Icon className='w-10 h-10 cursor-pointer' 
           icon={ ArrowUturnLeftIcon } 
@@ -73,10 +73,11 @@ const MinutaSeleccionada = () => {
           tooltip='Regresar'
         />
 
-        <div className='flex gap-1 md:gap-4 mt-4 md:mt-0'>
+        <div className='w-full justify-center md:justify-end flex gap-1 md:gap-4 mt-4 md:mt-0'>
           <Button
             variant='secondary'
             color='red'
+            onClick={ () => navigate(`/Dash/minutas/${id}/conclusion`) }
           >
             Conclusión de la reunión
           </Button>

@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import EditText from "../components/rich_text";
 import "../assets/styles/generarAcuerdo.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Button, Icon, Select, SelectItem, Subtitle, TextInput, Title } from "@tremor/react";
+import { ArrowUturnLeftIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
 const EditarAcuerdo = () => {
   const { idA } = useParams();
@@ -17,6 +19,8 @@ const EditarAcuerdo = () => {
     fecha: "",
     descripcion: ""
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,7 +78,8 @@ const EditarAcuerdo = () => {
             icon: 'success',
             confirmButtonText: 'Cool',
           }).then(() => {
-            window.location.reload();
+            // window.location.reload();
+            navigate(-1)
           });
         }
       } else {
@@ -99,75 +104,155 @@ const EditarAcuerdo = () => {
 
   if (acuerdoData) {
     return (
-      <div className="contenedor">
-        <div className="generaracuerdo">
-          <div className="arriba">
-            <div>Atras</div>
+      <>
+        {/* <div className="contenedor">
+          <div className="generaracuerdo">
+            <div className="arriba">
+              <div>Atras</div>
+            </div>
+            <div className="parte_abajo_acuerdo">
+              <h4 className="inf-gen">Datos del acuerdo</h4>
+              <select
+                className="input_acuerdo"
+                name="responsablec_id"
+                value={formData.responsablec_id}
+                onChange={handleInputChange}
+              >
+                <option value="">Responsable a cumplir</option>
+                {responsables.map((responsable) => (
+                  <option key={responsable._id} value={responsable.nombre}>
+                    {responsable.nombre}
+                  </option>
+                ))}
+              </select>
+              <select
+                className="input_acuerdo"
+                name="responsabler_id"
+                value={formData.responsabler_id}
+                onChange={handleInputChange}
+              >
+                <option value="">Responsable a revisión</option>
+                {responsables.map((responsable) => (
+                  <option key={responsable._id} value={responsable.nombre}>
+                    {responsable.nombre}
+                  </option>
+                ))}
+              </select>
+              <h4 className="inf-gen">Información general</h4>
+              <div className="titulo_fecha">
+                <input
+                  className="titulo input_acuerdo"
+                  type="text"
+                  placeholder="Título"
+                  name="acuerdo"
+                  value={formData.acuerdo}
+                  onChange={handleInputChange}
+                />
+                <input
+                  className="fecha input_acuerdo"
+                  type="text"
+                  placeholder="Fecha de compromiso (DD-MM-YY)"
+                  name="fecha"
+                  value={formData.fecha}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className=""> */}
+                {/* <EditText
+                  className="edit-text"
+                  value={formData.descripcion}
+                  onChange={handleInputChange}
+                  name="descripcion"
+                /> */}
+                {/* <input type="text" name="descripcion" onChange={handleInputChange} className="edit-text" value={formData.descripcion} />
+              </div>
+              <div className="cont-guardar">
+                <button className="guardar" onClick={handleSubmit}>
+                  Guardar
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="parte_abajo_acuerdo">
-            <h4 className="inf-gen">Datos del acuerdo</h4>
-            <select
-              className="input_acuerdo"
-              name="responsablec_id"
-              value={formData.responsablec_id}
-              onChange={handleInputChange}
-            >
-              <option value="">Responsable a cumplir</option>
-              {responsables.map((responsable) => (
-                <option key={responsable._id} value={responsable.nombre}>
-                  {responsable.nombre}
-                </option>
-              ))}
-            </select>
-            <select
-              className="input_acuerdo"
-              name="responsabler_id"
-              value={formData.responsabler_id}
-              onChange={handleInputChange}
-            >
-              <option value="">Responsable a revisión</option>
-              {responsables.map((responsable) => (
-                <option key={responsable._id} value={responsable.nombre}>
-                  {responsable.nombre}
-                </option>
-              ))}
-            </select>
-            <h4 className="inf-gen">Información general</h4>
-            <div className="titulo_fecha">
-              <input
-                className="titulo input_acuerdo"
-                type="text"
-                placeholder="Título"
-                name="acuerdo"
-                value={formData.acuerdo}
-                onChange={handleInputChange}
-              />
-              <input
-                className="fecha input_acuerdo"
-                type="text"
-                placeholder="Fecha de compromiso (DD-MM-YY)"
-                name="fecha"
-                value={formData.fecha}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="">
-              {/* <EditText
-                className="edit-text"
-                value={formData.descripcion}
-                onChange={handleInputChange}
-                name="descripcion"
-              /> */}
-              <input type="text" name="descripcion" onChange={handleInputChange} className="edit-text" value={formData.descripcion} />
-            </div>
-            <div className="cont-guardar">
-              <button className="guardar" onClick={handleSubmit}>
-                Guardar
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+        </div> */}
+        
+        <Icon className='w-10 h-10 cursor-pointer' 
+          icon={ ArrowUturnLeftIcon } 
+          onClick={ () => navigate(-1) } 
+          variant='solid' 
+          color='red'
+          tooltip='Regresar'
+        />
+
+        <form className='w-full px-5 lg:px-40' onSubmit={handleSubmit}>
+          <Title className='mt-4'>Datos del acuerdo</Title>
+
+          <Subtitle className="mt-2">Responsable a cumplir</Subtitle>
+          <Select
+            value={formData.responsablec_id}
+            onValueChange={(value) => setFormData({ ...formData, responsablec_id: value })}
+          >
+            {responsables.map((responsable) => (
+              <SelectItem key={responsable._id} value={responsable.nombre}>
+                {responsable.nombre}
+              </SelectItem>
+            ))}
+          </Select>
+
+          <Subtitle className="mt-2">Responsable a revisión</Subtitle>
+          <Select
+            value={formData.responsabler_id}
+            onValueChange={(value) => setFormData({ ...formData, responsabler_id: value })}
+          >
+            {responsables.map((responsable) => (
+              <SelectItem key={responsable._id} value={responsable.nombre}>
+                {responsable.nombre}
+              </SelectItem>
+            ))}
+          </Select>
+
+          <Title className="mt-5">Información general</Title>
+          <Subtitle className="mt-2">Título</Subtitle>
+          <TextInput
+            className='w-full mt-1'
+            label='Título'
+            name='acuerdo'
+            placeholder='Título'
+            value={formData.acuerdo}
+            onChange={handleInputChange}
+          />
+          <Subtitle className="mt-2">Fecha de compromiso</Subtitle>
+          <TextInput
+            className='w-full mt-1'
+            label='Fecha de compromiso'
+            name='fecha'
+            type='date'
+            placeholder='Fecha de compromiso'
+            value={formData.fecha}
+            onChange={handleInputChange}
+          />
+          <Subtitle className="mt-2">Descripción</Subtitle>
+          {/* <TextInput
+            className='w-full mt-1'
+            label='Descripción'
+            name='descripcion'
+            placeholder='Descripción'
+            value={formData.descripcion}
+            onChange={handleInputChange}
+          /> */}
+          <EditText value={ formData.descripcion }  setValue={ setFormData }/>
+
+          <Button
+            className='w-full mt-4'
+            type='submit'
+            color='green'
+            icon={ PaperAirplaneIcon }
+            iconPosition='right'
+          >
+            Guardar
+          </Button>
+        </form>
+
+      </>
     );
   }
 
