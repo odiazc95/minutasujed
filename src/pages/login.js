@@ -27,7 +27,6 @@ function Login() {
         console.log(user);
         if (user) {
           console.log('Puede');
-          navigate('/Dash/inicio');
           bcrypt.compare(password, user.password)
             .then((passwordMatch) => {
               console.log('Naa');  
