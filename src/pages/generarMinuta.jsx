@@ -224,29 +224,31 @@ const NuevaMinutas = () => {
           value={datosMinuta.responsable}
           onChange={handleChange}
         /> */}
-
-        <Subtitle className="mt-2">Fecha</Subtitle>
-        <div className='flex flex-col lg:flex-row gap-1'>
-          <TextInput
-            className='w-full lg:w-1/2 mt-1'
-            label='Fecha'
-            name='fecha'
-            type='date'
-            placeholder='Fecha'
-            value={datosMinuta.fecha}
-            onChange={handleChange}
-          />
-
-          <Subtitle className="mt-2">Hora</Subtitle>
-          <TextInput
-            className='w-full lg:w-1/2 mt-1'
-            label='Hora'
-            type='time'
-            name='hora'
-            placeholder='Hora'
-            value={datosMinuta.hora}
-            onChange={handleChange}
-          />
+        <div className="w-full flex gap-3">
+          <div className="w-full">
+            <Subtitle className="mt-2">Fecha</Subtitle>
+            <TextInput
+              className='w-full mt-1'
+              label='Fecha'
+              name='fecha'
+              type='date'
+              placeholder='Fecha'
+              value={datosMinuta.fecha}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="w-full">
+            <Subtitle className="mt-2">Hora</Subtitle>
+            <TextInput
+              className='w-full mt-1'
+              label='Hora'
+              type='time'
+              name='hora'
+              placeholder='Hora'
+              value={datosMinuta.hora}
+              onChange={handleChange}
+            />
+          </div>
         </div>
         
         <Title className='mt-4'>Informacion general</Title>
