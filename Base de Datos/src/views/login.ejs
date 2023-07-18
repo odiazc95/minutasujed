@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Autorizacion del Sistema Gestion de Minutas</title>
+    <link rel="stylesheet" href="/css/estilo-login.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="left-side">
+            <img src="/img/Logo UJED.png" alt="Logo">
+            <h1>Autorizacion del Sistema Gestion de Minutas</h1>
+        </div>
+        <div class="right-side">
+            <form id="signin-form" action="/signin" method="POST">          
+                <input type="text" name="matricula" placeholder="Matricula">
+                <input type="text" name="rfc" placeholder="Rfc">
+                <input type="submit" value="Iniciar sesión">
+            </form>
+        </div>
+    </div>
+    <script src="/js/loginController.js"></script>
+</body>
+</html>
