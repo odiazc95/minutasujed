@@ -1,0 +1,84 @@
+<html>
+                    <head>
+                        <link rel="preconnect" href="https://fonts.googleapis.com">
+                        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+                        <style>
+                            body {
+                                background: #000;
+                                font-family: 'Open Sans', Roboto;
+                                box-sizing: border-box;
+                            }
+                            .container {
+                                background: #ffff;
+                                width: 500px;
+                                height: 620px;
+                            }
+                            .logo_email {
+                                display: flex;
+                                justify-content: center;
+                            }
+                            .logo_email img {
+                                width: 270px;
+                                height: 170px;
+                            }
+                            .guest_name p {
+                                padding: 20px;
+                                font-size: 20px;
+                                font-family: 'Open sans';
+                                display: inline;
+                            }
+                            span {
+                                font-size: 16px;
+                                font-weight: bold;
+                            }
+                            .div_information {
+                                padding: 20px;
+                                font-size: 17.5;
+                                font-family: 'Open sans';
+                                text-align: justify;
+                            }
+                            .container_information {
+                                background: #B11830;
+                                color: #ffff;
+                                width: auto;
+                                height: 70px;                              
+                            }
+                            .container_information h2 {
+                                font-size: 25px;
+                                text-align: center;
+                                padding: 15px;
+                            }
+                            .confirm_button {
+                                background: #B11830;
+                                color: #ffff;
+                                width: 200px;
+                                height: 50px;
+                                margin: 40px 0px 0px 149px;
+                                font-family: 'Open sans';
+                                font-size: 16px;
+                                font-weight: bold;
+                                border: none;
+                            }
+                        </style>
+                    <head>
+                    <body>
+                        <div class ="container">
+                            <div class="logo_email">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/d/dd/Logo_de_la_Universidad_Ju%C3%A1rez_del_Estado_de_Durango.svg" alt="Logo - Universidad Juarez del Estado de Durango">
+                            </div>
+                            <div class="guest_name">
+                                <p>Estimad@ invitad@: </p><span>${name}</span>
+                            </div>
+                            <div class="div_information">
+                                Se le envia la siguiente invitacion para realizar la firma de la minuta <span>${subject}</span> que se realizo el dia <span>${date}</span> a las <span>${time}</span>.<br><br>
+    
+                                Si estas de acuerdo con los datos anteriormente mencionados, dale clic al siguiente boton para firmar digitalmente el documento pdf.
+                            </div>
+                            <div class="container_information">
+                                <h2>#SomosUJED</h2>
+                            </div>
+                            <button type="button" class="confirm_button" onclick="confirmSignature()">Firmar pdf digital</button>
+                        </div>
+                    </body>
+                </html>
