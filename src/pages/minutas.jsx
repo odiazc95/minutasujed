@@ -18,28 +18,27 @@ const Minutas = () => {
   console.log("--------------Coockies----------------");
   console.log(idUserCoockie);
   const [minutaData, setMinutaData] = useState(null);
+  
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3001/minutes/`);
-        setMinutaData(response.data); 
-        console.log("aaaaaaaaaaaaaaaaaaaaaaa");
-        console.log(response.data);
-
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     fetchData();
   }, []);
   
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3001/minutes/`);
+      setMinutaData(response.data); 
+      console.log("aaaaaaaaaaaaaaaaaaaaaaa");
+      console.log(response.data);
 
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   let minutaA, minutaF;
   if (minutaData) {
     minutaA = React.Children.toArray(
-      minutaData.map((u) => <Activa {...u} />)
+      minutaData.map((u) => <Activa {...u} updateData={fetchData} />)
     );
     minutaF = React.Children.toArray(
       minutaData.map((u) => <Finalizada {...u} />)

@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
-  AiFillFileText,
   AiFillCheckCircle,
   AiFillFilePdf,
-  AiFillCopy,
 } from "react-icons/ai";
-import { BsFillBookmarkStarFill } from "react-icons/bs";
-import { FaTrash } from "react-icons/fa";
-import { MdModeEdit } from "react-icons/md";
 import EliminarMinuta from "../actions/eliminarMinuta";
 import TerminarMinuta from '../actions/terminarMinuta';
-import Sw from "sweetalert2";
-import { Title, Text, Icon, Card, Button } from "@tremor/react";
+import { Title, Text, Card, Button } from "@tremor/react";
 import { PencilIcon, TrashIcon, ChevronDoubleRightIcon  } from '@heroicons/react/24/outline'
 
 
-export const Activa = (minuta) => {
+export const Activa = (minuta, updateData) => {
   const [eliminarMinutaVisible, setEliminarMinutaVisible] = useState(false);
   const [terminarMinutaVisible, setTerminarMinutaVisible] = useState(false);
 

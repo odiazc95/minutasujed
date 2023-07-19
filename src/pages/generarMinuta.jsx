@@ -4,7 +4,7 @@ import axios from "axios";
 import EditText from "../components/rich_text";
 import "../assets/styles/generarMinuta.css";
 import Swal from "sweetalert2";
-import { Title, Icon, Button, TextInput, Subtitle, Select, SelectItem } from "@tremor/react";
+import { Title, Icon, Button, TextInput, Subtitle, SearchSelect, SearchSelectItem, MultiSelect, MultiSelectItem } from "@tremor/react";
 import { ArrowUturnLeftIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 
 const NuevaMinutas = () => {
@@ -17,10 +17,11 @@ const NuevaMinutas = () => {
     tema: "",
     area: "",
     lugar: "",
-    usuario_id: [],
+    usuario_id: '',
     descripcion: "",
     estatus: "Activo"
   });
+  const [ guests, setGuests ] = useState([])
   const [ editableDescription, setEditableDescription ] = useState('');
 
   const navigate = useNavigate();
@@ -38,6 +39,10 @@ const NuevaMinutas = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    console.log(guests)
+    console.log(guests.join(','))
+  }, [guests])
 
   const handleChange = (e) => {
     setDatosMinuta({
@@ -48,6 +53,7 @@ const NuevaMinutas = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(datosMinuta);
     // const responsableEncontrado = usersData.find(
     //   (user) => user.nombre === datosMinuta.responsable
     // );
@@ -57,10 +63,12 @@ const NuevaMinutas = () => {
         .post("http://localhost:3001/minutes/", {
           ...datosMinuta,
           descripcion: editableDescription,
+          usuario_id: guests
           // responsable: responsableEncontrado._id
         })
         .then((response) => {
           console.log(response.data)
+          console.log(response)
           Swal.fire({
             title: "Minuta Guardada",
             icon: "success",
@@ -203,19 +211,19 @@ const NuevaMinutas = () => {
         />
 
         <Subtitle className="mt-2">Responsable</Subtitle>
-        <Select
+        <SearchSelect
           className='w-full mt-1'
           name='responsable'
           value={datosMinuta.responsable}
           onValueChange={(value) => setDatosMinuta({ ...datosMinuta, responsable: value })}
         >
-          <SelectItem value=''>Selecciona un usuario</SelectItem>
+          {/* <SearchSelectItem value=''>Selecciona un usuario</SearchSelectItem> */}
           {usersData.map((user) => (
-            <SelectItem key={user._id} value={user._id}>
+            <SearchSelectItem key={user._id} value={user._id}>
               {user.nombre}
-            </SelectItem>
+            </SearchSelectItem>
           ))}
-        </Select>
+        </SearchSelect>
         {/* <TextInput
           className='w-full mt-1'
           label='Responsable'
@@ -292,11 +300,25 @@ const NuevaMinutas = () => {
           value={datosMinuta.descripcion}
           onChange={handleChange}
         /> */}
+        <Subtitle className="mt-2">Invitados</Subtitle>
+        <MultiSelect
+          className='w-full mt-1'
+          name='usuario_id'
+          value={guests}
+          onValueChange={(value) => setGuests(value)}
+        >
+          {/* <SearchSelectItem value=''>Selecciona un usuario</SearchSelectItem> */}
+          {usersData.map((user) => (
+            <MultiSelectItem key={user._id} value={user._id}>
+              {user.nombre}
+            </MultiSelectItem>
+          ))}
+        </MultiSelect>
 
         <Subtitle className="mt-2">Descripcion</Subtitle>
         <EditText value={ editableDescription } setValue={ setEditableDescription } />
 
-        <Subtitle className="mt-2">Invitados</Subtitle>
+
         {/* <TextInput
           className='w-full mt-1'
           label='Invitados'
@@ -305,19 +327,7 @@ const NuevaMinutas = () => {
           value={datosMinuta.usuario_id}
           onChange={handleChange}
         /> */}
-        <Select
-          className='w-full mt-1'
-          name='usuario_id'
-          value={datosMinuta.usuario_id}
-          onValueChange={(value) => setDatosMinuta({ ...datosMinuta, usuario_id: value })}
-        >
-          <SelectItem value=''>Selecciona un usuario</SelectItem>
-          {usersData.map((user) => (
-            <SelectItem key={user._id} value={user._id}>
-              {user.nombre}
-            </SelectItem>
-          ))}
-        </Select>
+
 
         <Button
           className='w-full mt-4'
