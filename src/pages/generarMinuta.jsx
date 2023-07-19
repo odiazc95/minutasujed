@@ -17,11 +17,10 @@ const NuevaMinutas = () => {
     tema: "",
     area: "",
     lugar: "",
-    usuario_id: '',
+    usuario_id: [],
     descripcion: "",
     estatus: "Activo"
   });
-  const [ guests, setGuests ] = useState([])
   const [ editableDescription, setEditableDescription ] = useState('');
 
   const navigate = useNavigate();
@@ -39,10 +38,6 @@ const NuevaMinutas = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log(guests)
-    console.log(guests.join(','))
-  }, [guests])
 
   const handleChange = (e) => {
     setDatosMinuta({
@@ -53,7 +48,6 @@ const NuevaMinutas = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(datosMinuta);
     // const responsableEncontrado = usersData.find(
     //   (user) => user.nombre === datosMinuta.responsable
     // );
@@ -63,12 +57,8 @@ const NuevaMinutas = () => {
         .post("http://localhost:3001/minutes/", {
           ...datosMinuta,
           descripcion: editableDescription,
-          usuario_id: guests
-          // responsable: responsableEncontrado._id
         })
         .then((response) => {
-          console.log(response.data)
-          console.log(response)
           Swal.fire({
             title: "Minuta Guardada",
             icon: "success",
@@ -304,8 +294,8 @@ const NuevaMinutas = () => {
         <MultiSelect
           className='w-full mt-1'
           name='usuario_id'
-          value={guests}
-          onValueChange={(value) => setGuests(value)}
+          value={datosMinuta.usuario_id}
+          onValueChange={(value) => setDatosMinuta({ ...datosMinuta, usuario_id: value })}
         >
           {/* <SearchSelectItem value=''>Selecciona un usuario</SearchSelectItem> */}
           {usersData.map((user) => (

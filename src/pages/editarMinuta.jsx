@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 import "../assets/styles/generarMinuta.css";
 
-import { Title, Icon, Button, TextInput, Select, SelectItem, Subtitle } from "@tremor/react";
+import { Title, Icon, Button, TextInput, Select, SelectItem, Subtitle, MultiSelect, MultiSelectItem } from "@tremor/react";
 
 import { ArrowUturnLeftIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 
@@ -57,6 +57,7 @@ const EditarMinuta = () => {
     fetchData();
   }, []);
 
+
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
@@ -67,14 +68,14 @@ const EditarMinuta = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const responsableEncontrado = usersData.find(
-        (user) => user.nombre === formData.responsable
-      );
+      // const responsableEncontrado = usersData.find(
+      //   (user) => user.nombre === formData.responsable
+      // );
 
-      if (responsableEncontrado) {
+      // if (responsableEncontrado) {
         const response = await axios.put(`http://localhost:3001/minutes/${idM}`, {
           ...formData,
-          responsable: responsableEncontrado._id,
+          // responsable: responsableEncontrado._id,
           descripcion: editableDescription
         });
 
@@ -89,14 +90,14 @@ const EditarMinuta = () => {
             navigate('/Dash/minutas')
           });
         }
-      } else {
-        Swal.fire({
-          title: "Error!",
-          text: "Responsable no encontrado",
-          icon: "error",
-          confirmButtonText: "Cool"
-        });
-      }
+      // } else {
+      //   Swal.fire({
+      //     title: "Error!",
+      //     text: "Responsable no encontrado",
+      //     icon: "error",
+      //     confirmButtonText: "Cool"
+      //   });
+      // }
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -138,7 +139,7 @@ const EditarMinuta = () => {
           onValueChange={(value) => setFormData({ ...formData, responsable: value })}
         >
           {usersData.map((user) => (
-            <SelectItem key={user._id} value={user.nombre}>
+            <SelectItem key={user._id} value={user._id}>
               {user.nombre}
             </SelectItem>
           ))}
@@ -204,6 +205,21 @@ const EditarMinuta = () => {
           onChange={handleInputChange}
         />
 
+        <Subtitle className="mt-2">Invitados</Subtitle>
+        <MultiSelect
+          className='w-full mt-1'
+          name='usuario_id'
+          value={formData.usuario_id}
+          onValueChange={(value) => setFormData({ ...formData, usuario_id: value })}
+        >
+          {/* <SearchSelectItem value=''>Selecciona un usuario</SearchSelectItem> */}
+          {usersData.map((user) => (
+            <MultiSelectItem key={user._id} value={user._id}>
+              {user.nombre}
+            </MultiSelectItem>
+          ))}
+        </MultiSelect>
+
         <Subtitle className="mt-2">Descripcion</Subtitle>
         {/* <textarea
           className='w-full mt-1 border-[1px] border-tremor-border rounded-tremor-default px-4 py-1 bg-white hover:bg-tremor-background-muted focus:ring-2 focus:ring-tremor-brand-muted focus:border-tremor-brand-subtle focus:outline-none
@@ -217,7 +233,7 @@ const EditarMinuta = () => {
         /> */}
         <EditText value={ editableDescription } setValue={ setEditableDescription } />
 
-        <Subtitle className="mt-2">Invitados</Subtitle>
+        {/* <Subtitle className="mt-2">Invitados</Subtitle>
         <TextInput
           className='w-full mt-1'
           label='Invitados'
@@ -225,7 +241,7 @@ const EditarMinuta = () => {
           placeholder='Invitados'
           value={formData.invitados}
           onChange={handleInputChange}
-        />
+        /> */}
 
         
         <Button
