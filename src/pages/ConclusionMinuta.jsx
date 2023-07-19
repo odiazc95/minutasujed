@@ -1,8 +1,10 @@
 import { ArrowUturnLeftIcon, DocumentIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { Button, Divider, Icon, Title } from "@tremor/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EditText from "../components/rich_text";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 
 const ConclusionMinuta = () => {
@@ -11,10 +13,56 @@ const ConclusionMinuta = () => {
     const { idA } = useParams();
     const navigate = useNavigate();
 
-    const handleSubmit = () => {
-        console.log(conclusion)
-        // HERE GOES THE ENDPOINT CALL
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3001/minutes/${idA}`);
+                setConclusion(response?.data?.conclusion);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+    
+        fetchData();
+    }, []);
+
+    const handleSubmit = async() => {
+        if ( conclusion === '' ) return;
+
+        try {
+            const response = await axios.put(`http://localhost:3001/minutes/${idA}`, {
+                conclusion
+            })
+
+            if (response.status !== 200) {
+                Swal.fire({
+                    title: "Error!",
+                    text: response.data.message,
+                    icon: "error",
+                    confirmButtonText: "Cool"
+                  });
+                return;
+            }
+
+            Swal.fire({
+                title: "Minuta Guardada",
+                text: "Los datos se han guardado",
+                icon: "success",
+                confirmButtonText: "Cool"
+              }).then(() => {
+                navigate(-1)
+              });
+        } catch (error) {
+            console.error(error);
+            Swal.fire({
+                title: "Error!",
+                text: "Error al guardar los datos",
+                icon: "error",
+                confirmButtonText: "Cool"
+              });
+        }
     }
+
 
     return (
         <>

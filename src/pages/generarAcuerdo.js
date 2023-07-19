@@ -182,7 +182,6 @@ const NuevoAcuerdo = () => {
             value={formData.responsabler_id}
             onValueChange={(value) => setFormData({ ...formData, responsabler_id: value })}
           >
-            <SearchSelectItem value='1'>Responsable a revisión</SearchSelectItem>
             {responsables.map((responsable) => (
               <SearchSelectItem key={responsable._id} value={responsable._id}>
                 {responsable.nombre}
