@@ -4,7 +4,7 @@ import EditText from "../components/rich_text";
 import "../assets/styles/generarAcuerdo.css";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Title, Icon, Button, Select, SelectItem, TextInput, Subtitle } from "@tremor/react";
+import { Title, Icon, Button, SearchSelect, SearchSelectItem, TextInput, Subtitle } from "@tremor/react";
 import { ArrowUturnLeftIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 
 const NuevoAcuerdo = () => {
@@ -164,32 +164,31 @@ const NuevoAcuerdo = () => {
 
           <Title className='mt-4'>Datos del acuerdo</Title>
           <Subtitle className='mt-2'>Responsable a cumplir</Subtitle>
-          <Select
+          <SearchSelect
             className='mt-1'
             value={formData.responsablec_id}
             onValueChange={(value) => setFormData({ ...formData, responsablec_id: value })}
           >
-            <SelectItem value='1'>Responsable a cumplir</SelectItem>
             {responsables.map((responsable) => (
-              <SelectItem key={responsable._id} value={responsable._id}>
+              <SearchSelectItem key={responsable._id} value={responsable._id}>
                 {responsable.nombre}
-              </SelectItem>
+              </SearchSelectItem>
             ))}
-          </Select>
+          </SearchSelect>
           
           <Subtitle className='mt-2'>Responsable a revisión</Subtitle>
-          <Select
+          <SearchSelect
             className='mt-1'
             value={formData.responsabler_id}
             onValueChange={(value) => setFormData({ ...formData, responsabler_id: value })}
           >
-            <SelectItem value='1'>Responsable a revisión</SelectItem>
+            <SearchSelectItem value='1'>Responsable a revisión</SearchSelectItem>
             {responsables.map((responsable) => (
-              <SelectItem key={responsable._id} value={responsable._id}>
+              <SearchSelectItem key={responsable._id} value={responsable._id}>
                 {responsable.nombre}
-              </SelectItem>
+              </SearchSelectItem>
             ))}
-          </Select>
+          </SearchSelect>
 
           <Title className='mt-4'>Información general</Title>
           <div className='flex flex-wrap md:flex-nowrap gap-4'>

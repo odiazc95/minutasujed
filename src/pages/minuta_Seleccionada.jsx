@@ -9,7 +9,6 @@ import { PlusCircleIcon, ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 
 const MinutaSeleccionada = () => {
   const { id } = useParams();
-  console.log(id);
   const navigate = useNavigate();
 
   const [acuerdoData, setAcuerdoData] = useState([]);

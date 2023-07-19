@@ -4,7 +4,7 @@ import EditText from "../components/rich_text";
 import "../assets/styles/generarAcuerdo.css";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Button, Icon, Select, SelectItem, Subtitle, TextInput, Title } from "@tremor/react";
+import { Button, Icon, SearchSelect, SearchSelectItem, Subtitle, TextInput, Title } from "@tremor/react";
 import { ArrowUturnLeftIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
 const EditarAcuerdo = () => {
@@ -61,17 +61,17 @@ const EditarAcuerdo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const responsableCumplir = responsables.find(
-        (user) => user.nombre === formData.responsablec_id
-      );
-      const responsableRevision = responsables.find(
-        (user) => user.nombre === formData.responsabler_id
-      );
-      if (responsableCumplir && responsableRevision) {
+      // const responsableCumplir = responsables.find(
+      //   (user) => user.nombre === formData.responsablec_id
+      // );
+      // const responsableRevision = responsables.find(
+      //   (user) => user.nombre === formData.responsabler_id
+      // );
+      // if (responsableCumplir && responsableRevision) {
         const response = await axios.put(`http://localhost:3001/agreement/${idA}`, {
           ...formData,
-          responsablec_id: responsableCumplir._id,
-          responsabler_id: responsableRevision._id,
+          // responsablec_id: responsableCumplir._id,
+          // responsabler_id: responsableRevision._id,
           descripcion: editableDescription
         });
         if (response) {
@@ -85,14 +85,14 @@ const EditarAcuerdo = () => {
             navigate(-1)
           });
         }
-      } else {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Responsable no encontrado',
-          icon: 'error',
-          confirmButtonText: 'Cool',
-        });
-      }
+      // } else {
+      //   Swal.fire({
+      //     title: 'Error!',
+      //     text: 'Responsable no encontrado',
+      //     icon: 'error',
+      //     confirmButtonText: 'Cool',
+      //   });
+      // }
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -190,28 +190,28 @@ const EditarAcuerdo = () => {
           <Title className='mt-4'>Datos del acuerdo</Title>
 
           <Subtitle className="mt-2">Responsable a cumplir</Subtitle>
-          <Select
+          <SearchSelect
             value={formData.responsablec_id}
             onValueChange={(value) => setFormData({ ...formData, responsablec_id: value })}
           >
             {responsables.map((responsable) => (
-              <SelectItem key={responsable._id} value={responsable.nombre}>
+              <SearchSelectItem key={responsable._id} value={responsable._id}>
                 {responsable.nombre}
-              </SelectItem>
+              </SearchSelectItem>
             ))}
-          </Select>
+          </SearchSelect>
 
           <Subtitle className="mt-2">Responsable a revisión</Subtitle>
-          <Select
+          <SearchSelect
             value={formData.responsabler_id}
             onValueChange={(value) => setFormData({ ...formData, responsabler_id: value })}
           >
             {responsables.map((responsable) => (
-              <SelectItem key={responsable._id} value={responsable.nombre}>
+              <SearchSelectItem key={responsable._id} value={responsable._id}>
                 {responsable.nombre}
-              </SelectItem>
+              </SearchSelectItem>
             ))}
-          </Select>
+          </SearchSelect>
 
           <Title className="mt-5">Información general</Title>
           <Subtitle className="mt-2">Título</Subtitle>
