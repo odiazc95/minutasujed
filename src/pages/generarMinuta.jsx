@@ -46,8 +46,31 @@ const NuevaMinutas = () => {
     });
   };
 
+  const handleEmails = ( ids = [] ) => {
+    if ( ids.length === 0 ) return;
+    const emails = ids.map((id) => usersData.find( user => user._id === id ).email);
+    // TODO: CHANGE THIS TO THE REAL URL
+    axios.post('http://localhost:5000/send_email', {
+      subject: datosMinuta.asunto,
+      date: datosMinuta.fecha,
+      time: datosMinuta.hora,
+      guests: emails,
+    }).then((response) => {
+      if (!response.status === 200) return
+      Swal.fire({
+        title: 'correos enviado',
+        icon: 'success',
+        confirmButtonText: 'Cool'
+      }).then(() => {
+        navigate('/Dash/minutas');
+      })
+    })
+    .catch((error) => { console.error(error); });
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    // handleEmails(datosMinuta.usuario_id);
     // const responsableEncontrado = usersData.find(
     //   (user) => user.nombre === datosMinuta.responsable
     // );
@@ -64,8 +87,8 @@ const NuevaMinutas = () => {
             icon: "success",
             confirmButtonText: "Cool"
           }).then(() => {
-            // window.location.href='/minutas';
-            navigate("/Dash/minutas")
+            handleEmails(datosMinuta.usuario_id);
+            // navigate("/Dash/minutas")
           });
         })
         .catch((error) => {
@@ -300,7 +323,7 @@ const NuevaMinutas = () => {
           {/* <SearchSelectItem value=''>Selecciona un usuario</SearchSelectItem> */}
           {usersData.map((user) => (
             <MultiSelectItem key={user._id} value={user._id}>
-              {user.nombre}
+              {user.nombre} ({user.email})
             </MultiSelectItem>
           ))}
         </MultiSelect>
