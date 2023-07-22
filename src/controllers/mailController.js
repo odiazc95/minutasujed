@@ -12,6 +12,7 @@ router.post('/send_email', async (req, res, next) => {
     const refreshToken = '1//04UDNDe8u5KgLCgYIARAAGAQSNwF-L9IrePw75MR4SJN-w4vXSv7j5ALHOfA1w_b0EtfWHERylLnNsrH3qguu5YoOEJk_2HKl57w';
     
     const { subject, date, time, guests } = req.body;
+    console.log(req.body)
 
     const OAuth2Client = new google.auth.OAuth2(
         clientId, clientSecret, redirectUri
@@ -41,8 +42,8 @@ router.post('/send_email', async (req, res, next) => {
             for (const guest of guests) {
                 const user = await User.findOne({ email: guest});
                 const name = user.nombre;
-                const last_name_p = user.apellido_p;
-                const last_name_m = user.apellido_m;
+                const last_name_p = user.apellido_paterno;
+                const last_name_m = user.apellido_materno;
 
                 const mailOptions = {
                     from: 'martinez.daniel.isw@unipolidgo.edu.mx',

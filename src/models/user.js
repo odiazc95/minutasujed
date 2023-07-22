@@ -3,8 +3,8 @@ const bcrypt = require('bcryptjs');
 
 const userSchema = new Schema({
     nombre: String,
-    apellido_p: String,
-    apellido_m: String,
+    apellido_paterno: String,
+    apellido_materno: String,
     matricula: Number,
     rfc: String,
     email: String,

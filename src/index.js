@@ -5,7 +5,7 @@ require('dotenv').config();
 async function iniciar(){
     await app.listen();
 
-    const port = process.env.PORT || 3000;
+    const port = process.env.PORT || 5000;
 
     app.listen(port, () => console.log('Servidor funcionando en el puerto', port));
 
